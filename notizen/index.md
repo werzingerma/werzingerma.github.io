@@ -10,10 +10,8 @@ Hier findest du eine strukturierte Sammlung meiner Notizen aus Vorlesungen, Proj
 
 ## Vorlesungen
 
-### [Datenbanken-Vorlesung](/notizen/Datenbanken_Vorlesung/)
+### [Sequence-Learning](/notizen/Sequence_Learning/)
 Notizen und Zusammenfassungen aus der Datenbankvorlesung.
-- [DB1: Einführung in Datenbanksysteme](/notizen/Datenbanken_Vorlesung/db1)
-- [DB2: Relationales Datenbankmodell](/notizen/Datenbanken_Vorlesung/db2)
 
 ## Allgemeine Notizen
 
