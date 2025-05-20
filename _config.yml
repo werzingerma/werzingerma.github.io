@@ -1,37 +1,31 @@
-title: "Maximilian Werzinger"
-description: "Portfolio, Projekte & Wiki"
-lang: de-DE
-remote_theme: "mmistakes/minimal-mistakes@4.27.1"
-baseurl: ""            
-url: "https://werzingerma.github.io"
+title: Mein Portfolio & Wiki
+author: xx
+email: xx@googlemail.com
+description: Mein persönliches Portfolio, meine Projekte und Notizen
+baseurl: "/werzingerma.github.io" # falls deine Seite unter username.github.io/reponame läuft, setze "/reponame"
+url: "https://werzingerma.github.io" # ersetze username mit deinem GitHub-Benutzernamen
 
-collections:
-  projects:
-    output: true
-    permalink: /projekte/:name/
-  notes:
-    output: true
-    permalink: /wiki/:path/
+# Soziale Medien (optional)
+github_username: dein-github-name
+linkedin_username: dein-linkedin-name
 
-defaults:
-  - scope:               # Standard-Layout für Projektseiten
-      type: projects
-    values:
-      layout: single
-      author_profile: true
-  - scope:               # Wiki-Seiten mit Inhaltsverzeichnis
-      type: notes
-    values:
-      layout: single
-      toc: true
-      toc_label: "Inhalt"
+# Build-Einstellungen
+theme: minima # Du kannst auch andere Themes wie "jekyll-theme-minimal" verwenden
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
 
-# Navigation (Minimal Mistakes zieht das aus _data/navigation.yml,
-# hier inline für einen schnellen Start)
-nav:
-  - title: "Portfolio"
-    url: "/"
-  - title: "Projekte"
-    url: "/projekte/"
-  - title: "Wiki"
-    url: "/wiki/"
+# Navigation im Header
+header_pages:
+  - projekte/index.md
+  - notizen/index.md
+
+# Permalink-Struktur
+permalink: /:categories/:title/
+
+# Ausgeschlossene Dateien
+exclude:
+  - .gitignore
+  - Gemfile
+  - Gemfile.lock
+  - README.md
