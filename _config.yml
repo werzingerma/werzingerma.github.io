@@ -1,1 +1,37 @@
-theme: minima
+title: "Maximilian Werzinger"
+description: "Portfolio, Projekte & Wiki"
+lang: de-DE
+remote_theme: "mmistakes/minimal-mistakes@4.27.1"
+baseurl: ""            
+url: "https://werzingerma.github.io"
+
+collections:
+  projects:
+    output: true
+    permalink: /projekte/:name/
+  notes:
+    output: true
+    permalink: /wiki/:path/
+
+defaults:
+  - scope:               # Standard-Layout für Projektseiten
+      type: projects
+    values:
+      layout: single
+      author_profile: true
+  - scope:               # Wiki-Seiten mit Inhaltsverzeichnis
+      type: notes
+    values:
+      layout: single
+      toc: true
+      toc_label: "Inhalt"
+
+# Navigation (Minimal Mistakes zieht das aus _data/navigation.yml,
+# hier inline für einen schnellen Start)
+nav:
+  - title: "Portfolio"
+    url: "/"
+  - title: "Projekte"
+    url: "/projekte/"
+  - title: "Wiki"
+    url: "/wiki/"
