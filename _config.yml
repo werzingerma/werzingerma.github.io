@@ -2,7 +2,7 @@ title: Mein Portfolio & Wiki
 author: xx
 email: xx@googlemail.com
 description: Mein persönliches Portfolio, meine Projekte und Notizen
-baseurl: "/werzingerma.github.io" # falls deine Seite unter username.github.io/reponame läuft, setze "/reponame"
+baseurl: "" # falls deine Seite unter username.github.io/reponame läuft, setze "/reponame"
 url: "https://werzingerma.github.io" # ersetze username mit deinem GitHub-Benutzernamen
 
 # Soziale Medien (optional)
