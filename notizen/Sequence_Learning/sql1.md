@@ -80,11 +80,53 @@ s i t t i n g
 
 **Grundprinzip**, bei dem große Probleme in **überlappende Teilprobleme** zerlegt und deren Lösungen **gespeichert (Memoization)** werden.
 
-### Beispiel für Levenshtein:
-Für die Wörter `kitten` und `sitting` wird eine Matrix erstellt, die jede mögliche Kombination von Teilstrings speichert. So wird Schritt für Schritt die minimale Anzahl von Änderungen bestimmt, statt alles mehrfach zu berechnen.
+---
 
-### Beispiel für DTW:
-Für zwei Zeitreihen z. B. `[1, 2, 3]` und `[1, 1.5, 2.5, 3]` wird eine Matrix aufgebaut, die die Abweichung jedes Punktepaares misst. Durch „Verzerren“ der Zeitachsen wird der optimal passende Pfad gefunden.
+### Beispiel für Levenshtein (kitten → sitting)
+
+Initiale Matrix (inkl. leere Zeichen "" vorangestellt):
+
+|   | "" | s | i | t | t | i | n | g |
+|---|----|---|---|---|---|---|---|---|
+| ""| 0  | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
+| k | 1  |   |   |   |   |   |   |   |
+| i | 2  |   |   |   |   |   |   |   |
+| t | 3  |   |   |   |   |   |   |   |
+| t | 4  |   |   |   |   |   |   |   |
+| e | 5  |   |   |   |   |   |   |   |
+| n | 6  |   |   |   |   |   |   |   |
+
+Dann füllen wir die Matrix mit der Regel:
+- cost = 0 bei gleichen Buchstaben, sonst 1
+- `min(einfügen, löschen, ersetzen) + cost`
+
+Final ausgefüllte Matrix ergibt `Levenshtein-Abstand = 3`.
+
+---
+
+### Beispiel für DTW
+
+Zwei Zeitreihen:
+```
+A = [1, 2, 3]
+B = [2, 2, 3, 4]
+```
+
+Initialisiere DTW-Matrix (∞ für unerreichbar, 0 am Start):
+```
+        2   2   3   4
+    -------------------
+1 |  1   1   2   3
+2 |  0   0   1   2
+3 |  1   1   0   1
+```
+
+Pfad (optimaler „Warping Path“):  
+(1,1) → (2,2) → (3,3)
+
+→ DTW-Abstand = Summe der minimalen Pfadkosten = 1
+
+---
 
 ### Anwendung:
 - Basis für Edit-Distanzen, DTW, Alignment-Algorithmen
