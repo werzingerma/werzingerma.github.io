@@ -1,12 +1,12 @@
 title: Mein Portfolio & Wiki
-author: xx
-email: xx@googlemail.com
+author: 
+email: 
 description: Mein persönliches Portfolio, meine Projekte und Notizen
 baseurl: "" 
 url: "https://werzingerma.github.io" 
 
 github_username: werzingerma
-linkedin_username: maximilian-werzinger-8b7939341
+#linkedin_username: maximilian-werzinger-8b7939341
 
 # Build-Einstellungen
 theme: minima # Du kannst auch andere Themes wie "jekyll-theme-minimal" verwenden
