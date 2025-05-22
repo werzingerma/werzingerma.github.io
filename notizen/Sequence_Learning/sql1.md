@@ -76,6 +76,7 @@ s i t t i n g
 
 ---
 
+
 ## 4. Dynamische Programmierung (DP)
 
 **Grundprinzip**, bei dem große Probleme in **überlappende Teilprobleme** zerlegt und deren Lösungen **gespeichert (Memoization)** werden.
@@ -84,47 +85,77 @@ s i t t i n g
 
 ### Beispiel für Levenshtein (kitten → sitting)
 
+Wir berechnen die minimale Anzahl von Einfüge-, Lösch- oder Ersetz-Operationen, um "kitten" in "sitting" zu verwandeln.
+
+**Wörter:**
+- Quelle: `kitten`
+- Ziel: `sitting`
+
 Initiale Matrix (inkl. leere Zeichen "" vorangestellt):
 
-|   | "" | s | i | t | t | i | n | g |
-|---|----|---|---|---|---|---|---|---|
-| ""| 0  | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
-| k | 1  |   |   |   |   |   |   |   |
-| i | 2  |   |   |   |   |   |   |   |
-| t | 3  |   |   |   |   |   |   |   |
-| t | 4  |   |   |   |   |   |   |   |
-| e | 5  |   |   |   |   |   |   |   |
-| n | 6  |   |   |   |   |   |   |   |
+|   |   | s | i | t | t | i | n | g |
+|---|---|---|---|---|---|---|---|---|
+|   | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
+| k | 1 |   |   |   |   |   |   |   |
+| i | 2 |   |   |   |   |   |   |   |
+| t | 3 |   |   |   |   |   |   |   |
+| t | 4 |   |   |   |   |   |   |   |
+| e | 5 |   |   |   |   |   |   |   |
+| n | 6 |   |   |   |   |   |   |   |
 
-Dann füllen wir die Matrix mit der Regel:
-- cost = 0 bei gleichen Buchstaben, sonst 1
-- `min(einfügen, löschen, ersetzen) + cost`
+**Füllregel:**
+- Wenn Buchstaben gleich → cost = 0
+- Sonst → cost = 1
+- Zelle = min(Einfügen, Löschen, Ersetzen) + cost
 
-Final ausgefüllte Matrix ergibt `Levenshtein-Abstand = 3`.
+Wir füllen die Matrix zeilenweise, z. B.:
+- Für Zelle (1,1): `k` vs. `s` → cost = 1 → min(1, 1, 0) + 1 = 1
+- Für Zelle (2,2): `i` vs. `i` → cost = 0 → min(2, 2, 1) + 0 = 1
+- usw.
+
+Am Ende steht in der rechten unteren Ecke die Lösung: **3**
+
+→ **Levenshtein-Abstand("kitten", "sitting") = 3**
 
 ---
 
-### Beispiel für DTW
+### Beispiel für DTW (Dynamic Time Warping)
 
-Zwei Zeitreihen:
+Wir vergleichen zwei Zeitreihen, z. B.:
+
 ```
 A = [1, 2, 3]
 B = [2, 2, 3, 4]
 ```
 
-Initialisiere DTW-Matrix (∞ für unerreichbar, 0 am Start):
+**Initialisierung:**
+- Matrixgröße = len(A)+1 x len(B)+1
+- Startpunkt (0,0) = 0, alle anderen Zellen ∞
+- Abstand: quadratischer Abstand: `(a_i - b_j)^2`
+
+**Schritt-für-Schritt-Füllung:**
 ```
-        2   2   3   4
-    -------------------
-1 |  1   1   2   3
-2 |  0   0   1   2
-3 |  1   1   0   1
+DTW[0][0] = 0
+
+Für alle i, j:
+DTW[i][j] = (A[i-1] - B[j-1])^2 + min(
+    DTW[i-1][j],     # Einfügen
+    DTW[i][j-1],     # Löschen
+    DTW[i-1][j-1]    # Match
+)
 ```
 
-Pfad (optimaler „Warping Path“):  
-(1,1) → (2,2) → (3,3)
+**Beispielhafte Matrix für A=[1,2,3], B=[2,2,3,4] (gekürzt):**
 
-→ DTW-Abstand = Summe der minimalen Pfadkosten = 1
+|   |   | 2 | 2 | 3 | 4 |
+|---|---|---|---|---|---|
+|   | 0 | ∞ | ∞ | ∞ | ∞ |
+| 1 | ∞ | 1 | 1 | 5 | 14 |
+| 2 | ∞ | 1 | 1 | 2 | 6 |
+| 3 | ∞ | 2 | 2 | 1 | 2 |
+
+→ Der optimale Pfad (Warping Path) verläuft dort, wo die kumulierten Kosten am niedrigsten sind.  
+→ **DTW-Abstand = 2** (unterste rechte Ecke)
 
 ---
 
@@ -135,7 +166,6 @@ Pfad (optimaler „Warping Path“):
 🔗 [Video: Dynamische Programmierung einfach erklärt (Teil 1)](https://www.youtube.com/watch?v=oNoILrFOx2k)  
 🔗 [Video: Dynamische Programmierung einfach erklärt (Teil 2)](https://www.youtube.com/watch?v=aPQY__2H3tE)
 
----
 
 ## 5. Needleman-Wunsch-Algorithmus
 
