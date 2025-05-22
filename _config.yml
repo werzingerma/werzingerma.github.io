@@ -2,12 +2,11 @@ title: Mein Portfolio & Wiki
 author: xx
 email: xx@googlemail.com
 description: Mein persönliches Portfolio, meine Projekte und Notizen
-baseurl: "" # falls deine Seite unter username.github.io/reponame läuft, setze "/reponame"
-url: "https://werzingerma.github.io" # ersetze username mit deinem GitHub-Benutzernamen
+baseurl: "" 
+url: "https://werzingerma.github.io" 
 
-# Soziale Medien (optional)
-github_username: dein-github-name
-linkedin_username: dein-linkedin-name
+github_username: werzingerma
+linkedin_username: maximilian-werzinger-8b7939341
 
 # Build-Einstellungen
 theme: minima # Du kannst auch andere Themes wie "jekyll-theme-minimal" verwenden
