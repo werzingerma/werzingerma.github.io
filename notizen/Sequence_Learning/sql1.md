@@ -6,152 +6,151 @@ permalink: /notizen/Sequence_Learning/sql1/
 
 # comparing sequences
 
-## 1  Hamming-Abstand
-**Idee**  
-Zwei gleich lange Zeichenketten werden Zeichen-für-Zeichen verglichen; jedes ungleiche Zeichen kostet 1.
+## 📏 1. Hamming-Abstand
 
-```text
-x = 101110
-y = 100100
-Unterschiede an Position 3 und 5
+Der **Hamming-Abstand** zählt, **wie viele Stellen sich zwei gleich lange Bitfolgen unterscheiden**.
+
+### Beispiel:
+```
+A: 1 0 1 1 0 0 1  
+B: 1 0 0 1 1 0 1
+
+Unterschiede an Position 3 und 5  
 → Hamming-Abstand = 2
 ```
 
-> **Merken:** Funktioniert nur bei *gleich langen* Sequenzen – keine Lücken erlaubt.
+### Anwendung:
+- Vergleich von Audiosignalen oder Binärmerkmalen
+- Fehlererkennung bei Datenübertragung
+
+🔗 [Wikipedia: Hamming-Abstand](https://de.wikipedia.org/wiki/Hamming-Abstand)
 
 ---
 
-## 2  Edit-/Levenshtein-Abstand
-**Idee**  
-Kleinste Anzahl von **Einfügen (I), Löschen (D), Ersetzen (R)**, um String A in String B zu verwandeln (jeder Schritt kostet 1).
+## ✏️ 2. Edit-/Levenshtein-Abstand
 
-```text
-kitten   →  sitting
-kitten → sitten   (R)
-sitten → sittin   (R)
-sittin → sitting  (I)
-Distanz = 3
+Zählt die **minimale Anzahl an Operationen** (Einfügen, Löschen, Ersetzen), um eine Zeichenfolge in eine andere umzuwandeln.
+
+### Beispiel:
+```
+"kitten" → "sitting"
+1. kitten → sitten   (k → s)
+2. sitten → sittin   (e → i)
+3. sittin → sitting  (g anhängen)
+
+→ Levenshtein-Abstand = 3
 ```
 
-> **Merken:** Erlaubt unterschiedliche Längen – realistisch für Tippfehler & DNA-Mutationen.
+### Anwendung:
+- Spracherkennung (z. B. erkannte Wörter vs. Zieltext)
+- Rechtschreibkorrektur
+- Ähnlichkeitsmessung
+
+🔗 [Wikipedia: Levenshtein-Distanz](https://de.wikipedia.org/wiki/Levenshtein-Distanz)
 
 ---
 
-## 3  Edit-Transcript / Alignment
-**Idee**  
-Beide Sequenzen untereinander legen, „–“ für Lücken. Ein Band aus **M**atch, **R**eplace, **I**nsert, **D**elete beschreibt den optimalen Weg.
+## 🧾 3. Edit-Transcript / Alignment
 
-```text
-k i t t e n -
+Das **Edit-Transcript** beschreibt die **Reihenfolge der Schritte** (Insert, Delete, Substitute), um eine Sequenz in eine andere zu überführen.
+
+### Beispiel:
+```
+A: kitten  
+B: sitting
+
+Transcript:
+S(k → s), S(e → i), I(g)
+
+Alignment (vereinfacht):
+k i t t e n
+| | | | | |
 s i t t i n g
-M R M M R M I
 ```
 
-> **Merken:** Zeigt **welche** Operationen nötig sind, nicht nur wie viele.
+### Anwendung:
+- Visualisierung von Fehlern bei automatischer Spracherkennung
+- Auswertung von Vorhersagegenauigkeit
+
+🔗 [Lecture Slide Beispiel (engl.) mit Edit Transcripts](https://web.stanford.edu/class/cs124/lec/med.pdf)
 
 ---
 
-## 4  Dynamische Programmierung (DP)
-**Idee**  
-Matrix D[i,j] füllen – jede Zelle ist  
-* links + 1 (Insert)  
-* oben + 1 (Delete)  
-* diagonal + δ (0 = Match, 1 = Mismatch)
+## 🔁 4. Dynamische Programmierung (DP)
 
-Beispiel: „ab“ → „ac“
+**Grundprinzip**, bei dem große Probleme in **überlappende Teilprobleme** zerlegt und deren Lösungen **gespeichert (Memoization)** werden.
 
-|   | ε | a | c |
-|---|---|---|---|
-| **ε** | 0 | 1 | 2 |
-| **a** | 1 | 0 | 1 |
-| **b** | 2 | 1 | 2 |
+### Beispiel-Idee:
+Beim Levenshtein- oder DTW-Algorithmus wird eine Matrix aufgebaut, die **Schritt für Schritt die optimale Lösung** berechnet, statt alles mehrfach zu prüfen.
 
-Rechts-unten = 2 → Distanz 2.
+### Anwendung:
+- Basis für Edit-Distanzen, DTW, Alignment-Algorithmen
+- Sehr effizient bei rekursiven Problemen
 
-> **Merken:** Zeit & Speicher O(m · n); Rückwärts-Pfeile liefern das Alignment.
+🔗 [Wikipedia: Dynamische Programmierung](https://de.wikipedia.org/wiki/Dynamische_Programmierung)
 
 ---
 
-## 5  Anpassbare Kosten
-**Idee**  
-Operationen können beliebige Preise haben (z. B. Tastatur-Distanz als Substitutionskosten).
+## 🧬 5. Needleman-Wunsch-Algorithmus
 
-```python
-cost_subst = {
-    ('g','h'): 0.5,   # Nachbartasten
-    ('g','p'): 2.2    # weiter Abstand
-}
-gap_penalty = 2      # Einfügen / Löschen
+Ein auf dynamischer Programmierung basierender Algorithmus zur **globalen Sequenz-Ausrichtung**.
+
+### Beispiel:
+```
+A: G A T T A C A  
+B: G C A T G C U
+
+Alignment:
+G A T T A - C A
+|   | |     | |
+G C A T - G C U
 ```
 
-> **Merken:** Richtige Kosten machen Ergebnisse praxisnäher (Bio-Scores, Autokorrektur).
+### Anwendung:
+- Sprachvergleiche über gesamte Zeiträume
+- Ursprünglich für Bioinformatik, heute auch in Audioanalyse genutzt
+
+🔗 [Needleman-Wunsch einfach erklärt (YouTube)](https://www.youtube.com/watch?v=3hcaVyX00_4)
 
 ---
 
-## 6  Needleman-Wunsch-Algorithmus
-**Idee**  
-Biologisches Alignment – **Match-Belohnung**, **Mismatch- und Gap-Strafen**; DP **maximiert** den Gesamt-Score.
+## 🔄 6. Damerau-Levenshtein-Abstand
 
-```text
-Scores:  Match +2,  Mismatch −1,  Gap −2
+Erweiterung der Levenshtein-Distanz: erlaubt zusätzlich **Vertauschung benachbarter Zeichen (Transposition)**.
 
-A G C
-A - C
-Score = +2 −2 +2 = +2   → bestes Alignment
+### Beispiel:
+```
+"ca" → "ac"
+→ Levenshtein: 2 (Löschen + Einfügen)
+→ Damerau-Levenshtein: 1 (Vertauschung)
 ```
 
-> **Merken:** Gleiches Raster wie Levenshtein, aber auf *Maximum* statt Minimum optimiert.
+### Anwendung:
+- Besseres Modell für reale Tippfehler
+- Nützlich bei Tastatureingaben und ASR
+
+🔗 [Wikipedia: Damerau-Levenshtein-Distanz](https://de.wikipedia.org/wiki/Damerau-Levenshtein-Distanz)
 
 ---
 
-## 7  Damerau-Levenshtein
-**Idee**  
-Zählt zusätzlich **Vertauschungen benachbarter Zeichen** als eine Operation.
+## ⏱️ 7. Dynamic Time Warping (DTW)
 
-```text
-"hte"  → "the"   (Vertauschung)  → Distanz = 1
+Ein DP-basierter Algorithmus, der **ähnliche Zeitreihen unterschiedlicher Länge** vergleicht (z. B. Audiosignale).
+
+### Beispiel:
+```
+Signal A: [1, 2, 3, 4, 5]
+Signal B: [1, 1.5, 2.5, 4, 5]
+
+→ DTW „verzerrt“ die Zeitachse, um optimale Übereinstimmung zu finden.
 ```
 
-> **Merken:** Fängt typische Vertipper ab („teh“ → „the“).
+### Anwendung:
+- Spracherkennung
+- Audio-Matching
+- Musikvergleich
+
+🔗 [Wikipedia: Dynamic Time Warping](https://de.wikipedia.org/wiki/Dynamic_Time_Warping)
+🔗 [DTW Erklärungsvideo (YouTube)](https://www.youtube.com/watch?v=3dZ_0s8f3N8)
 
 ---
-
-## 8  Dynamic Time Warping (DTW)
-**Idee**  
-Ein „elastisches Band“ passt zwei **Zeit-Kurven** aneinander; erlaubt lokale Streckung/Kompression.
-
-```text
-Kurven: [100,105,110,115]   vs.   [100,110,115]
-DTW biegt die zweite, bis Punkte übereinanderliegen  
-→ geringe Gesamtkosten
-```
-
-> **Merken:** Gleiche DP-Matrix-Idee, aber für kontinuierliche Daten (Audio, Gesten).
-
----
-
-## 9  Typische Anwendungen
-
-| Verfahren | Klassischer Einsatz |
-|-----------|--------------------|
-| Hamming | QR-/Barcode-Prüfung |
-| Levenshtein | Rechtschreibkorrektur, Auto-Complete |
-| Needleman-Wunsch | Protein-/DNA-Alignment |
-| Tastatur-Kosten | „Smart Keyboard“-Fehlerkorrektur |
-| Damerau | Schnelle Tippfehler-Erkennung |
-| DTW | Sprach- und Gestenerkennung, DTMF-Decoder |
-
----
-
-## 10  Lern-Roadmap
-
-1. **Papier zuerst:** Male die DP-Matrix für „kitten/sitting“.  
-2. **Code-Schritte:**  
-   * `hamming(x,y)` in < 5 Zeilen  
-   * `levenshtein_dp(x,y)` mit `numpy`  
-   * Needleman-Wunsch mit variablen Gap-Strafen  
-3. **Parameter spielen:** Gap-Strafe erhöhen/verringern und das Alignment beobachten.  
-4. **Übertragen:** Gleiche Matrix-Logik auf Audio-Kurven → DTW.
-
-> **Faustregel:** Kannst du die Matrix zeichnen, kannst du den Algorithmus programmieren. 🎯
-
