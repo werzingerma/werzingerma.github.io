@@ -47,10 +47,10 @@ Beispieltext:
 - bigram("strong again") = 1  
 
 → Daraus:
-- p(again | great) = 1 / 1 = 1  
-- p(again | strong) = 1 / 1 = 1  
-- p(great | America) = 1 / 2 = 0.5  
-- p(strong | America) = 1 / 2 = 0.5
+- `p(again | great) = 1 / 1 = 1`
+- `p(again | strong) = 1 / 1 = 1`
+- `p(great | America) = 1 / 2 = 0.5`
+- `p(strong | America) = 1 / 2 = 0.5`
 
 → Das Modell speichert diese Wahrscheinlichkeiten.
 
@@ -83,12 +83,12 @@ Angenommen, im Training kam vor:
 - bigram("America rich") = 0  
 
 **Ohne Smoothing:**
-- p(great | America) = 1 / 1 = 1  
-- p(rich | America) = 0 / 1 = 0 ← schlecht
+- `p(great | America) = 1 / 1 = 1`
+- `p(rich | America) = 0 / 1 = 0 ← schlecht`
 
 **Mit Smoothing (Vokabulargröße = 4):**
-- p(great | America) = (1 + 1) / (1 + 4) = 2 / 5 = 0.4  
-- p(rich | America) = (0 + 1) / (1 + 4) = 1 / 5 = 0.2  
+- `p(great | America) = (1 + 1) / (1 + 4) = 2 / 5 = 0.4`
+- `p(rich | America) = (0 + 1) / (1 + 4) = 1 / 5 = 0.2`
 
 → Bessere Verteilung, keine Null-Wahrscheinlichkeiten!
 
