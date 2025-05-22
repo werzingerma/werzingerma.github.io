@@ -6,7 +6,7 @@ permalink: /notizen/Sequence_Learning/sql1/
 
 # comparing sequences
 
-## 📏 1. Hamming-Abstand
+## 1. Hamming-Abstand
 
 Der **Hamming-Abstand** zählt, **wie viele Stellen sich zwei gleich lange Bitfolgen unterscheiden**.
 
@@ -27,7 +27,7 @@ Unterschiede an Position 3 und 5
 
 ---
 
-## ✏️ 2. Edit-/Levenshtein-Abstand
+## 2. Edit-/Levenshtein-Abstand
 
 Zählt die **minimale Anzahl an Operationen** (Einfügen, Löschen, Ersetzen), um eine Zeichenfolge in eine andere umzuwandeln.
 
@@ -50,7 +50,7 @@ Zählt die **minimale Anzahl an Operationen** (Einfügen, Löschen, Ersetzen), u
 
 ---
 
-## 🧾 3. Edit-Transcript / Alignment
+## 3. Edit-Transcript / Alignment
 
 Das **Edit-Transcript** beschreibt die **Reihenfolge der Schritte** (Insert, Delete, Substitute), um eine Sequenz in eine andere zu überführen.
 
@@ -76,22 +76,26 @@ s i t t i n g
 
 ---
 
-## 🔁 4. Dynamische Programmierung (DP)
+## 4. Dynamische Programmierung (DP)
 
 **Grundprinzip**, bei dem große Probleme in **überlappende Teilprobleme** zerlegt und deren Lösungen **gespeichert (Memoization)** werden.
 
-### Beispiel-Idee:
-Beim Levenshtein- oder DTW-Algorithmus wird eine Matrix aufgebaut, die **Schritt für Schritt die optimale Lösung** berechnet, statt alles mehrfach zu prüfen.
+### Beispiel für Levenshtein:
+Für die Wörter `kitten` und `sitting` wird eine Matrix erstellt, die jede mögliche Kombination von Teilstrings speichert. So wird Schritt für Schritt die minimale Anzahl von Änderungen bestimmt, statt alles mehrfach zu berechnen.
+
+### Beispiel für DTW:
+Für zwei Zeitreihen z. B. `[1, 2, 3]` und `[1, 1.5, 2.5, 3]` wird eine Matrix aufgebaut, die die Abweichung jedes Punktepaares misst. Durch „Verzerren“ der Zeitachsen wird der optimal passende Pfad gefunden.
 
 ### Anwendung:
 - Basis für Edit-Distanzen, DTW, Alignment-Algorithmen
 - Sehr effizient bei rekursiven Problemen
 
-🔗 [Wikipedia: Dynamische Programmierung](https://de.wikipedia.org/wiki/Dynamische_Programmierung)
+🔗 [Video: Dynamische Programmierung einfach erklärt (Teil 1)](https://www.youtube.com/watch?v=oNoILrFOx2k)  
+🔗 [Video: Dynamische Programmierung einfach erklärt (Teil 2)](https://www.youtube.com/watch?v=aPQY__2H3tE)
 
 ---
 
-## 🧬 5. Needleman-Wunsch-Algorithmus
+## 5. Needleman-Wunsch-Algorithmus
 
 Ein auf dynamischer Programmierung basierender Algorithmus zur **globalen Sequenz-Ausrichtung**.
 
@@ -110,11 +114,11 @@ G C A T - G C U
 - Sprachvergleiche über gesamte Zeiträume
 - Ursprünglich für Bioinformatik, heute auch in Audioanalyse genutzt
 
-🔗 [Needleman-Wunsch einfach erklärt (YouTube)](https://www.youtube.com/watch?v=3hcaVyX00_4)
+🔗 [YouTube: Needleman-Wunsch Algorithmus erklärt (Deutsch)](https://www.youtube.com/watch?v=Lsa-VfSQgt4)
 
 ---
 
-## 🔄 6. Damerau-Levenshtein-Abstand
+## 6. Damerau-Levenshtein-Abstand
 
 Erweiterung der Levenshtein-Distanz: erlaubt zusätzlich **Vertauschung benachbarter Zeichen (Transposition)**.
 
@@ -129,11 +133,11 @@ Erweiterung der Levenshtein-Distanz: erlaubt zusätzlich **Vertauschung benachba
 - Besseres Modell für reale Tippfehler
 - Nützlich bei Tastatureingaben und ASR
 
-🔗 [Wikipedia: Damerau-Levenshtein-Distanz](https://de.wikipedia.org/wiki/Damerau-Levenshtein-Distanz)
+🔗 [Wikipedia: Damerau-Levenshtein Distance (engl.)](https://en.wikipedia.org/wiki/Damerau–Levenshtein_distance)
 
 ---
 
-## ⏱️ 7. Dynamic Time Warping (DTW)
+## 7. Dynamic Time Warping (DTW)
 
 Ein DP-basierter Algorithmus, der **ähnliche Zeitreihen unterschiedlicher Länge** vergleicht (z. B. Audiosignale).
 
@@ -150,7 +154,8 @@ Signal B: [1, 1.5, 2.5, 4, 5]
 - Audio-Matching
 - Musikvergleich
 
-🔗 [Wikipedia: Dynamic Time Warping](https://de.wikipedia.org/wiki/Dynamic_Time_Warping)
-🔗 [DTW Erklärungsvideo (YouTube)](https://www.youtube.com/watch?v=3dZ_0s8f3N8)
+🔗 [Wikipedia: Dynamic Time Warping](https://de.wikipedia.org/wiki/Dynamic_Time_Warping)  
+🔗 [YouTube: DTW Explained – Part 1](https://www.youtube.com/watch?v=_K1OsqCicBY)  
+🔗 [YouTube: DTW Explained – Part 2](https://www.youtube.com/watch?v=ERKDHZyZDwA)
 
 ---
