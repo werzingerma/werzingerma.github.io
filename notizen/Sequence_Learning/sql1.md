@@ -1,10 +1,10 @@
 ---
 layout: page
-title: SQL1 - comparing sequences
+title: Sequence Learning - Comparing Sequences
 permalink: /notizen/Sequence_Learning/sql1/
 ---
 
-# comparing sequences
+# Comparing Sequences
 
 ## 1. Hamming-Abstand
 
