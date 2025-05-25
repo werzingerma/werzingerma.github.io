@@ -9,7 +9,7 @@ github_username: werzingerma
 #linkedin_username: maximilian-werzinger-8b7939341
 
 # Build-Einstellungen
-theme: minima # Du kannst auch andere Themes wie "jekyll-theme-minimal" verwenden
+theme: null 
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
