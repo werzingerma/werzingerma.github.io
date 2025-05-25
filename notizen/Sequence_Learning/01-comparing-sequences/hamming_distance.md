@@ -4,10 +4,6 @@ title: Sequence Learning - Comparing Sequences
 permalink: /notizen/Sequence_Learning/01-comparing-sequences/hamming_distance
 ---
 
-<script type="text/javascript" async
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-</script>
-
 # Hamming-Distanz
 
 ## Was ist die Hamming-Distanz?
@@ -15,9 +11,8 @@ permalink: /notizen/Sequence_Learning/01-comparing-sequences/hamming_distance
 Die Hamming-Distanz zwischen zwei gleich langen Zeichenketten ist die Anzahl der Positionen, an denen sich die Zeichen unterscheiden.
 
 **Formel:**
-\[
-\text{Hamming}(x, y) = \sum_{i=1}^{n} [x_i \neq y_i]
-\]
+
+![Hamming-Distanz-Formel](/assets/images/hamming-formel.png)
 
 ## Voraussetzung
 
