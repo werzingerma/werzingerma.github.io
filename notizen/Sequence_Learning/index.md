@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Sequence-Learning-Vorlesung
+title: Sequence-Learning - Vorlesung
 permalink: /notizen/Sequence_Learning/
 ---
 
@@ -8,7 +8,7 @@ permalink: /notizen/Sequence_Learning/
 
 ## Inhaltsverzeichnis
 
-1. [Comparing Sequences](sql1)
+1. [Comparing Sequences](01-comparing-sequences/index.md)
 2. [Markov Chains and n-grams](sql2)
 3. [Hidden Markov Chains](sql3)
 4. [NNets Basics](sql4)
