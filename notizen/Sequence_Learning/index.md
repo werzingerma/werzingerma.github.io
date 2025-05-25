@@ -9,7 +9,7 @@ permalink: /notizen/Sequence_Learning/
 ## Inhaltsverzeichnis
 
 1. [Comparing Sequences](01-comparing-sequences/index.md)
-2. [Markov Chains and n-grams](sql2)
+2. [Markov Chains and n-grams](02-markov-chains/index.md)
 3. [Hidden Markov Chains](sql3)
 4. [NNets Basics](sql4)
 5. [NNets - Feed-Forward Networks for Sequence Data](sql5)

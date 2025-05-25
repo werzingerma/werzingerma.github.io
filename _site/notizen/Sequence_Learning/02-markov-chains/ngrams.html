@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>N-Grams | Mein Portfolio &amp; Wiki</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="N-Grams" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Mein persönliches Portfolio, meine Projekte und Notizen" />
+<meta property="og:description" content="Mein persönliches Portfolio, meine Projekte und Notizen" />
+<link rel="canonical" href="http://localhost:4000/notizen/Sequence_Learning/02-markov-chains/ngrams" />
+<meta property="og:url" content="http://localhost:4000/notizen/Sequence_Learning/02-markov-chains/ngrams" />
+<meta property="og:site_name" content="Mein Portfolio &amp; Wiki" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="N-Grams" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Mein persönliches Portfolio, meine Projekte und Notizen","headline":"N-Grams","url":"http://localhost:4000/notizen/Sequence_Learning/02-markov-chains/ngrams"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Mein Portfolio &amp; Wiki" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Mein Portfolio &amp; Wiki</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/projekte/">Meine Projekte</a><a class="page-link" href="/notizen/">Meine Notizen</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">N-Grams</h1>
+  </header>
+
+  <div class="post-content">
+    <p>Ein <strong>n‑Gram</strong> ist eine Kette von <code class="language-plaintext highlighter-rouge">n</code> aufeinanderfolgenden Tokens aus einem Text. In Sprachmodellen schätzen wir, wie wahrscheinlich das nächste Wort ist, wenn wir die letzten <code class="language-plaintext highlighter-rouge">n − 1</code> Wörter kennen.</p>
+
+<h2 id="formel">Formel</h2>
+
+<p>Für ein Bi‑gramm (<code class="language-plaintext highlighter-rouge">n = 2</code>) gilt</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(w_i | w_{i-1}) = C(w_{i-1}, w_i) / C(w_{i-1})
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">C(⋅)</code> steht für beobachtete Häufigkeiten im Korpus.</p>
+
+<blockquote>
+  <p><strong>Markov‑Bezug</strong>: Ein n‑Gram‑Modell ist eine Markov‑Kette der Ordnung <code class="language-plaintext highlighter-rouge">n − 1</code>.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="beispielcode-uni-bi-und-trigrams">Beispiel­code: Uni‑, Bi‑ und Tri‑grams</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+
+<span class="k">def</span> <span class="nf">ngrams</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="s">"""Erzeuge Zähler für alle n‑Grams in der Sequenz."""</span>
+    <span class="k">return</span> <span class="n">Counter</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">seq</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">n</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span><span class="o">-</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s">"make america great again"</span><span class="p">.</span><span class="n">lower</span><span class="p">().</span><span class="n">split</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Unigrams "</span><span class="p">,</span> <span class="n">ngrams</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Bigrams  "</span><span class="p">,</span> <span class="n">ngrams</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Trigrams "</span><span class="p">,</span> <span class="n">ngrams</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>Jedes <code class="language-plaintext highlighter-rouge">Counter</code>‑Objekt enthält das N‑Gram als Schlüssel und die Häufigkeit als Wert. Durch Ändern des Parameters <code class="language-plaintext highlighter-rouge">n</code> lässt sich dieselbe Funktion für <em>beliebige</em> n‑Grams nutzen.</p>
+
+<hr />
+
+<h2 id="anwendung">Anwendung</h2>
+
+<ul>
+  <li><strong>Sprachmodelle</strong> (Autovervollständigung, ASR)</li>
+  <li><strong>Textklassifikation</strong> (Autorschaft, Sentiment)</li>
+  <li><strong>Maschinelle Übersetzung</strong>, <strong>Spell‑Checker</strong></li>
+</ul>
+
+<p>Durch Vergrößerung von <code class="language-plaintext highlighter-rouge">n</code> steigt der Kontext, aber auch die Zahl der Parameter und damit die Daten­knappheit → <em>Smoothing</em> notwendig (siehe <em>Wichtige Begriffe</em>).</p>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Mein Portfolio &amp; Wiki</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Mein Portfolio &amp; Wiki</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/werzingerma"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">werzingerma</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Mein persönliches Portfolio, meine Projekte und Notizen</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+<!-- MathJax für LaTeX-Formeln -->
+    <script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']]
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+      processHtmlClass: 'tex2jax_process'
+    }
+  };
+</script>
+<script type="text/javascript" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+  </body>
+
+</html>
