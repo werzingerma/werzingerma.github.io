@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Levenshtein-Distanz (Edit Distance) | Mein Portfolio &amp; Wiki</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Levenshtein-Distanz (Edit Distance)" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Mein persönliches Portfolio, meine Projekte und Notizen" />
+<meta property="og:description" content="Mein persönliches Portfolio, meine Projekte und Notizen" />
+<link rel="canonical" href="http://localhost:4000/notizen/Sequence_Learning/01-comparing-sequences/levenshtein_distance" />
+<meta property="og:url" content="http://localhost:4000/notizen/Sequence_Learning/01-comparing-sequences/levenshtein_distance" />
+<meta property="og:site_name" content="Mein Portfolio &amp; Wiki" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Levenshtein-Distanz (Edit Distance)" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Mein persönliches Portfolio, meine Projekte und Notizen","headline":"Levenshtein-Distanz (Edit Distance)","url":"http://localhost:4000/notizen/Sequence_Learning/01-comparing-sequences/levenshtein_distance"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Mein Portfolio &amp; Wiki" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Mein Portfolio &amp; Wiki</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/projekte/">Meine Projekte</a><a class="page-link" href="/notizen/">Meine Notizen</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Levenshtein-Distanz (Edit Distance)</h1>
+  </header>
+
+  <div class="post-content">
+    <h2 id="was-ist-die-levenshtein-distanz">Was ist die Levenshtein-Distanz?</h2>
+
+<p>Die Levenshtein-Distanz beschreibt die minimale Anzahl an Editieroperationen, um eine Zeichenkette in eine andere zu überführen. Dabei sind erlaubt:</p>
+
+<ul>
+  <li><strong>Insertion</strong> (Einfügen eines Zeichens)</li>
+  <li><strong>Deletion</strong> (Löschen eines Zeichens)</li>
+  <li><strong>Substitution</strong> (Ersetzen eines Zeichens)</li>
+</ul>
+
+<p>Die Levenshtein-Distanz ist also ein Maß für die Ähnlichkeit zweier Zeichenketten beliebiger Länge.</p>
+
+<h2 id="beispiel">Beispiel</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="s">"kitten"</span>
+<span class="n">y</span> <span class="o">=</span> <span class="s">"sitting"</span>
+</code></pre></div></div>
+
+<p>Um “kitten” in “sitting” zu überführen:</p>
+
+<ol>
+  <li>Substituiere ‘k’ → ‘s’ → “sitten”</li>
+  <li>Substituiere ‘e’ → ‘i’ → “sittin”</li>
+  <li>Füge ‘g’ ein → “sitting”</li>
+</ol>
+
+<p><strong>Levenshtein-Distanz = 3</strong></p>
+
+<h2 id="eigenschaften">Eigenschaften</h2>
+
+<ul>
+  <li>Funktioniert auch bei unterschiedlich langen Strings</li>
+  <li>Berücksichtigt die drei Grundoperationen: Insert, Delete, Substitute</li>
+  <li>Laufzeit der Standard-Implementierung:</li>
+</ul>
+
+<p><img src="/assets/images/zeitkomplexität_levenshtein.png" alt="Zeitkomplexität der Levenshtein-Distanz" /></p>
+
+<p>Bedeutung der Formel:</p>
+<ul>
+  <li>n= Länge des ersten Strings (z. B. x)</li>
+  <li>m= Länge des zweiten Strings (z. B. y)</li>
+  <li>Das Produkt n⋅m ergibt die Anzahl der Zellen in der dynamischen Programmierungs-Matrix.</li>
+  <li>Jeder Zellenwert wird in konstanter Zeit berechnet → daher insgesamt linear in der Anzahl der Matrixzellen.</li>
+</ul>
+
+<h2 id="python-implementierung-bottom-up">Python-Implementierung (Bottom-Up)</h2>
+<p>Bottom-Up bedeutet, dass man ein Problem löst, indem man zuerst alle kleinen Teilprobleme berechnet und deren Lösungen Schritt für Schritt zu einer Gesamtlösung zusammensetzt.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="k">def</span> <span class="nf">edit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">D</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">D</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">D</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">delta</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">y</span><span class="p">[</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="k">else</span> <span class="mi">0</span>
+            <span class="n">D</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span>
+                <span class="n">D</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="n">D</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="n">D</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">delta</span>
+            <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">D</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)]</span>
+</code></pre></div></div>
+
+<h2 id="erklärung-des-codes">Erklärung des Codes</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">D</code> ist eine Matrix (Tabelle), in der für jedes Teilproblem die minimale Anzahl an Änderungen gespeichert wird.</li>
+  <li><code class="language-plaintext highlighter-rouge">D[i][j]</code> gibt die Levenshtein-Distanz zwischen den ersten <code class="language-plaintext highlighter-rouge">i</code> Zeichen von <code class="language-plaintext highlighter-rouge">x</code> und den ersten <code class="language-plaintext highlighter-rouge">j</code> Zeichen von <code class="language-plaintext highlighter-rouge">y</code> an.</li>
+  <li>Die erste Zeile und Spalte der Matrix werden mit 0, 1, 2, … gefüllt, da es so viele Schritte braucht, um aus einem leeren String einen String dieser Länge zu machen (nur Einfügungen oder Löschungen).</li>
+  <li>Die Schleifen füllen dann die Matrix:
+    <ul>
+      <li>Wenn das aktuelle Zeichen in <code class="language-plaintext highlighter-rouge">x</code> und <code class="language-plaintext highlighter-rouge">y</code> gleich ist, ist <code class="language-plaintext highlighter-rouge">delta = 0</code> (kein Fehler).</li>
+      <li>Ansonsten <code class="language-plaintext highlighter-rouge">delta = 1</code> (ein Fehler – Substitution).</li>
+    </ul>
+  </li>
+  <li>In jeder Zelle wird das Minimum aus drei möglichen Operationen gewählt:
+    <ol>
+      <li><strong>Löschen</strong> eines Zeichens aus <code class="language-plaintext highlighter-rouge">x</code> (hochkommen in der Matrix)</li>
+      <li><strong>Einfügen</strong> eines Zeichens in <code class="language-plaintext highlighter-rouge">x</code> (von links kommen)</li>
+      <li><strong>Substitution</strong> (von diagonal kommen)</li>
+    </ol>
+  </li>
+</ul>
+
+<p>Am Ende steht in der unteren rechten Ecke <code class="language-plaintext highlighter-rouge">D[len(x)][len(y)]</code> die finale Levenshtein-Distanz.</p>
+
+<h2 id="beispielaufruf">Beispielaufruf</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">edit</span><span class="p">(</span><span class="s">"kitten"</span><span class="p">,</span> <span class="s">"sitting"</span><span class="p">)</span>  <span class="c1"># Ergebnis: 3
+</span></code></pre></div></div>
+
+<h2 id="anwendung">Anwendung</h2>
+
+<ul>
+  <li>Rechtschreibkorrektur (z. B. Autovervollständigung)</li>
+  <li>Bioinformatik (Sequenzvergleich von DNA/RNA)</li>
+  <li>Versionsvergleich in Textverarbeitung</li>
+  <li>Ähnlichkeitssuche in Datenbanken</li>
+</ul>
+
+<h2 id="wichtig">Wichtig</h2>
+
+<ul>
+  <li>Die Levenshtein-Distanz berücksichtigt Einfügungen, Löschungen und Ersetzungen.</li>
+  <li>Im Gegensatz zur Hamming-Distanz funktioniert sie auch bei unterschiedlich langen Strings.</li>
+  <li>Die Matrix-basierte Lösung erlaubt effiziente Berechnung und Backtracking zur Bestimmung des optimalen Edit-Transkripts.</li>
+</ul>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Mein Portfolio &amp; Wiki</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Mein Portfolio &amp; Wiki</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/werzingerma"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">werzingerma</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Mein persönliches Portfolio, meine Projekte und Notizen</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+<!-- MathJax für LaTeX-Formeln -->
+    <script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']]
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+      processHtmlClass: 'tex2jax_process'
+    }
+  };
+</script>
+<script type="text/javascript" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+  </body>
+
+</html>
