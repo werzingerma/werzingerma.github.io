@@ -4,6 +4,10 @@ title: Sequence Learning - Comparing Sequences
 permalink: /notizen/Sequence_Learning/01-comparing-sequences/hamming_distance
 ---
 
+<script type="text/javascript" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
 # Hamming-Distanz
 
 ## Was ist die Hamming-Distanz?
