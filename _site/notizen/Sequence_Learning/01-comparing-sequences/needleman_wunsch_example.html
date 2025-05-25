@@ -3,20 +3,20 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Sequence Learning - Comparing Sequences | Mein Portfolio &amp; Wiki</title>
+<title>Needleman-Wunsch Beispiel | Mein Portfolio &amp; Wiki</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Sequence Learning - Comparing Sequences" />
+<meta property="og:title" content="Needleman-Wunsch Beispiel" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Mein persönliches Portfolio, meine Projekte und Notizen" />
 <meta property="og:description" content="Mein persönliches Portfolio, meine Projekte und Notizen" />
-<link rel="canonical" href="http://localhost:4000/notizen/Sequence_Learning/01-comparing-sequences/index" />
-<meta property="og:url" content="http://localhost:4000/notizen/Sequence_Learning/01-comparing-sequences/index" />
+<link rel="canonical" href="http://localhost:4000/notizen/Sequence_Learning/01-comparing-sequences/needleman_wunsch_example" />
+<meta property="og:url" content="http://localhost:4000/notizen/Sequence_Learning/01-comparing-sequences/needleman_wunsch_example" />
 <meta property="og:site_name" content="Mein Portfolio &amp; Wiki" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Sequence Learning - Comparing Sequences" />
+<meta property="twitter:title" content="Needleman-Wunsch Beispiel" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Mein persönliches Portfolio, meine Projekte und Notizen","headline":"Sequence Learning - Comparing Sequences","url":"http://localhost:4000/notizen/Sequence_Learning/01-comparing-sequences/index"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Mein persönliches Portfolio, meine Projekte und Notizen","headline":"Needleman-Wunsch Beispiel","url":"http://localhost:4000/notizen/Sequence_Learning/01-comparing-sequences/needleman_wunsch_example"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Mein Portfolio &amp; Wiki" /></head>
 <body><header class="site-header" role="banner">
@@ -39,21 +39,118 @@
         <article class="post">
 
   <header class="post-header">
-    <h1 class="post-title">Sequence Learning - Comparing Sequences</h1>
+    <h1 class="post-title">Needleman-Wunsch Beispiel</h1>
   </header>
 
   <div class="post-content">
-    <h1 id="comparing-sequences">Comparing Sequences</h1>
+    <p><img src="/assets/images/needleman-wunsch-algorithm-example.png" alt="Needleman-Wunsch Beispiel" /></p>
 
-<h2 id="inhaltsverzeichnis">Inhaltsverzeichnis</h2>
+<h2 id="sequenzen">Sequenzen</h2>
 
-<ol>
-  <li><a href="/notizen/Sequence_Learning/01-comparing-sequences/hamming_distance">Hamming-Distanz</a></li>
-  <li><a href="/notizen/Sequence_Learning/01-comparing-sequences/levenshtein_distance">Levenshtein-Distanz</a></li>
-  <li><a href="/notizen/Sequence_Learning/01-comparing-sequences/needleman_wunsch">Needleman-Wunsch Algorithmus</a></li>
-  <li><a href="/notizen/Sequence_Learning/01-comparing-sequences/dynamic_time_warping">Dynamic Time Warping</a></li>
-  <li><a href="/notizen/Sequence_Learning/01-comparing-sequences/cost_modelling">Modeling Cost</a></li>
-</ol>
+<ul>
+  <li>Horizontale Sequenz (x-Achse): <code class="language-plaintext highlighter-rouge">HEAGAWGHEE</code></li>
+  <li>Vertikale Sequenz (y-Achse): <code class="language-plaintext highlighter-rouge">PAWHEAE</code></li>
+</ul>
+
+<h2 id="was-zeigt-die-matrix">Was zeigt die Matrix?</h2>
+
+<ul>
+  <li>Jede Zelle enthält den <strong>Score des besten Alignments</strong> bis zu diesem Punkt.</li>
+  <li><strong>Pfeile</strong> zeigen den gewählten Pfad:
+    <ul>
+      <li>↖️ Diagonal: Match oder Mismatch</li>
+      <li>⬅️ Von links: Gap in vertikaler Sequenz (Insertion)</li>
+      <li>⬆️ Von oben: Gap in horizontaler Sequenz (Deletion)</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="ziel">Ziel</h2>
+
+<p>Durch <strong>Backtrace vom letzten Feld (rechts unten)</strong> wird das <strong>optimale Alignment</strong> rekonstruiert.</p>
+
+<h2 id="optimales-alignment-aus-dem-bild">Optimales Alignment aus dem Bild</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>HEAGAWGHE-E
+-P-A--W-HEAE
+</code></pre></div></div>
+
+<h2 id="bedeutung-des-alignments">Bedeutung des Alignments</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Zeichen x (Seq1)</th>
+      <th>Zeichen y (Seq2)</th>
+      <th>Operation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>H</td>
+      <td>-</td>
+      <td>Deletion</td>
+    </tr>
+    <tr>
+      <td>E</td>
+      <td>P</td>
+      <td>Mismatch</td>
+    </tr>
+    <tr>
+      <td>A</td>
+      <td>A</td>
+      <td>Match</td>
+    </tr>
+    <tr>
+      <td>G</td>
+      <td>-</td>
+      <td>Deletion</td>
+    </tr>
+    <tr>
+      <td>A</td>
+      <td>-</td>
+      <td>Deletion</td>
+    </tr>
+    <tr>
+      <td>W</td>
+      <td>W</td>
+      <td>Match</td>
+    </tr>
+    <tr>
+      <td>G</td>
+      <td>-</td>
+      <td>Deletion</td>
+    </tr>
+    <tr>
+      <td>H</td>
+      <td>H</td>
+      <td>Match</td>
+    </tr>
+    <tr>
+      <td>E</td>
+      <td>E</td>
+      <td>Match</td>
+    </tr>
+    <tr>
+      <td>-</td>
+      <td>A</td>
+      <td>Insertion</td>
+    </tr>
+    <tr>
+      <td>E</td>
+      <td>E</td>
+      <td>Match</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="fazit">Fazit</h2>
+
+<ul>
+  <li>Der grüne Pfad in der Matrix zeigt das <strong>optimale globale Alignment</strong>.</li>
+  <li>Die Matrix enthält sowohl die <strong>Punktzahlen</strong> als auch die <strong>Pfeile für die Rückverfolgung</strong>.</li>
+  <li>Durch Nachvollziehen dieses Pfads erhält man das <strong>beste mögliche Alignment beider Sequenzen</strong>.</li>
+</ul>
 
   </div>
 

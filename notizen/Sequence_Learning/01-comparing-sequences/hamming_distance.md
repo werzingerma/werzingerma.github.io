@@ -1,10 +1,8 @@
 ---
 layout: page
-title: Sequence Learning - Comparing Sequences
+title: Hamming-Distanz
 permalink: /notizen/Sequence_Learning/01-comparing-sequences/hamming_distance
 ---
-
-# Hamming-Distanz
 
 ## Was ist die Hamming-Distanz?
 
