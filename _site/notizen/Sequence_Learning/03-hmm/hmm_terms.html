@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Begriffserklärungen (zu HMMs) | Mein Portfolio &amp; Wiki</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Begriffserklärungen (zu HMMs)" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Mein persönliches Portfolio, meine Projekte und Notizen" />
+<meta property="og:description" content="Mein persönliches Portfolio, meine Projekte und Notizen" />
+<link rel="canonical" href="http://localhost:4000/notizen/Sequence_Learning/03-hmm/hmm_terms" />
+<meta property="og:url" content="http://localhost:4000/notizen/Sequence_Learning/03-hmm/hmm_terms" />
+<meta property="og:site_name" content="Mein Portfolio &amp; Wiki" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Begriffserklärungen (zu HMMs)" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Mein persönliches Portfolio, meine Projekte und Notizen","headline":"Begriffserklärungen (zu HMMs)","url":"http://localhost:4000/notizen/Sequence_Learning/03-hmm/hmm_terms"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Mein Portfolio &amp; Wiki" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Mein Portfolio &amp; Wiki</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/projekte/">Meine Projekte</a><a class="page-link" href="/notizen/">Meine Notizen</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Begriffserklärungen (zu HMMs)</h1>
+  </header>
+
+  <div class="post-content">
+    <hr />
+
+<h2 id="beobachtungsmodell">Beobachtungsmodell</h2>
+
+<p>Das Beobachtungs‑ oder Emissionsmodell beschreibt, <strong>welche Beobachtung (Symbol, Feature‑Vektor)</strong> in welchem verborgenen Zustand mit welcher Wahrscheinlichkeit auftreten kann.<br />
+Ohne ein passendes Beobachtungsmodell könnte das HMM die realen Messwerte nicht erklären.</p>
+
+<p><strong>Mini‑Beispiel &amp; Ergebnis</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Ausschnitt aus dem Ampel‑Beispiel
+</span><span class="n">model</span><span class="p">.</span><span class="n">emissionprob_</span> <span class="o">=</span> <span class="mf">0.05</span><span class="o">*</span><span class="n">np</span><span class="p">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>  <span class="c1"># Grundrauschen 5 %
+</span><span class="n">model</span><span class="p">.</span><span class="n">emissionprob_</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.95</span>            <span class="c1"># Zustand 'Rot' sendet fast immer R‑Licht
+</span></code></pre></div></div>
+
+<blockquote>
+  <p>Die Werte sagen: <strong>95 %</strong> der Zeit, wenn der Zustand <em>Rot</em> aktiv ist, sehen wir eine rote Lampe;<br />
+<strong>5 %</strong> sind Fehlmessungen. Genau diese weichen Beobachtungs‑Wahrscheinlichkeiten machen das HMM robuster.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="hmmstruktur">HMM‑Struktur</h2>
+
+<p>Mit <strong>π, A, B</strong> legt man Start‑, Übergangs‑ und Emissions­wahrscheinlich­keiten fest – das komplette, lern‑ und auswertbare Modell.</p>
+
+<p><strong>Beispielcode</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">n</span> <span class="o">=</span> <span class="mi">3</span>                         <span class="c1"># 3 Zustände
+</span><span class="n">model</span> <span class="o">=</span> <span class="n">hmm</span><span class="p">.</span><span class="n">MultinomialHMM</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">init_params</span><span class="o">=</span><span class="s">""</span><span class="p">)</span>
+<span class="n">model</span><span class="p">.</span><span class="n">startprob_</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span><span class="mf">0.2</span><span class="p">,</span><span class="mf">0.1</span><span class="p">]</span>  <span class="c1"># π
+</span><span class="n">model</span><span class="p">.</span><span class="n">transmat_</span>  <span class="o">=</span> <span class="p">[[.</span><span class="mi">8</span><span class="p">,.</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                    <span class="p">[.</span><span class="mi">1</span><span class="p">,.</span><span class="mi">8</span><span class="p">,.</span><span class="mi">1</span><span class="p">],</span>
+                    <span class="p">[.</span><span class="mi">1</span><span class="p">,.</span><span class="mi">1</span><span class="p">,.</span><span class="mi">8</span><span class="p">]]</span>   <span class="c1"># A
+</span><span class="n">model</span><span class="p">.</span><span class="n">emissionprob_</span> <span class="o">=</span> <span class="p">[[.</span><span class="mi">6</span><span class="p">,.</span><span class="mi">4</span><span class="p">],</span>
+                       <span class="p">[.</span><span class="mi">3</span><span class="p">,.</span><span class="mi">7</span><span class="p">],</span>
+                       <span class="p">[.</span><span class="mi">9</span><span class="p">,.</span><span class="mi">1</span><span class="p">]]</span>   <span class="c1"># B
+</span></code></pre></div></div>
+
+<blockquote>
+  <p>Damit ist das HMM vollständig definiert und kann sofort für Viterbi, Forward oder Training verwendet werden.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="isolated-word-recognition">Isolated Word Recognition</h2>
+
+<p>Aufgabe: <strong>Einzelne</strong> gesprochene Wörter einem Wörterbuch zuordnen (z. B. „yes“, „no“, „stop“).<br />
+Dazu bekommt jedes Wort ein eigenes HMM; das Wort mit der höchsten Beobachtungs­wahrscheinlichkeit <strong>P(O | λ)</strong> gewinnt.</p>
+
+<p><strong>Ablauf in Pseudocode</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">best_word</span><span class="p">,</span> <span class="n">best_logp</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="p">.</span><span class="n">inf</span>
+<span class="k">for</span> <span class="n">word</span><span class="p">,</span> <span class="n">hmm_model</span> <span class="ow">in</span> <span class="n">dictionary</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">logp</span> <span class="o">=</span> <span class="n">hmm_model</span><span class="p">.</span><span class="n">score</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>     <span class="c1"># Forward‑Log‑Wahrscheinlichkeit
+</span>    <span class="k">if</span> <span class="n">logp</span> <span class="o">&gt;</span> <span class="n">best_logp</span><span class="p">:</span>
+        <span class="n">best_word</span><span class="p">,</span> <span class="n">best_logp</span> <span class="o">=</span> <span class="n">word</span><span class="p">,</span> <span class="n">logp</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Erkanntes Wort:"</span><span class="p">,</span> <span class="n">best_word</span><span class="p">)</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>Forward liefert eine Zahl für jedes Wort‑HMM; das Maximum entscheidet – fertig ist die Klassifikation.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="forward--backwardalgorithmen">Forward‑ &amp; Backward‑Algorithmen</h2>
+
+<p><em>Forward</em> berechnet <strong>P(O | λ)</strong> vom Start nach vorn, <em>Backward</em> das Gleiche rückwärts.<br />
+Beide zusammen sind Basis für <strong>Baum‑Welch</strong> und erlauben schnelle Wahrscheinlichkeitsschätzung <em>ohne</em> alle Pfad‑Kombinationen durchzugehen.</p>
+
+<p><strong>Beispielcode &amp; Ergebnis</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">logp</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">score</span><span class="p">(</span><span class="n">obs</span><span class="p">)</span>        <span class="c1"># interner Forward‑Algorithmus
+</span><span class="k">print</span><span class="p">(</span><span class="s">"Log‑Likelihood:"</span><span class="p">,</span> <span class="n">logp</span><span class="p">)</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>Für die Wetter‑Sequenz ergibt sich z. B. <code class="language-plaintext highlighter-rouge">Log‑Likelihood: -12.47</code>, was bedeutet:<br />
+Die Beobachtung ist mit Wahrscheinlichkeit ≈ e^(−12.47) ≈ 3.8 × 10⁻⁶ unter diesem Modell entstanden.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="viterbialgorithmus">Viterbi‑Algorithmus</h2>
+
+<p>Gibt die <strong>wahrscheinlichste Zustandsfolge q*</strong> zu einer Beobachtungsreihe zurück – ideal für Dekodierungs‑ oder Segmentierungsaufgaben.</p>
+
+<p><strong>Beispielcode &amp; Ergebnis</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">logp</span><span class="p">,</span> <span class="n">states</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">decode</span><span class="p">(</span><span class="n">obs</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s">"viterbi"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">states</span><span class="p">)</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>Ausgabe (Ampel): <code class="language-plaintext highlighter-rouge">[0 0 1 2 2 3 0]</code> – genau ein kompletter Ampelzyklus.<br />
+Damit hat Viterbi auf einen Blick die versteckte Logik rekonstruiert.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="baumwelchalgorithmus-emtraining">Baum‑Welch‑Algorithmus (EM‑Training)</h2>
+
+<p>Unüberwachtes Lernen der Parameter <strong>π, A, B</strong>.<br />
+Iteriert zwischen</p>
+<ol>
+  <li><strong>E‑Schritt</strong>: Erwartete Zustands‑ und Übergangshäufigkeiten via Forward/Backward,</li>
+  <li><strong>M‑Schritt</strong>: Aktualisieren der Parameter.</li>
+</ol>
+
+<p><strong>Beispielcode</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span> <span class="o">=</span> <span class="n">hmm</span><span class="p">.</span><span class="n">MultinomialHMM</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>  <span class="c1"># 'ste' = alle Parameter lernen
+</span><span class="n">model</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">obs</span><span class="p">)</span>           <span class="c1"># Baum‑Welch läuft automatisch
+</span><span class="k">print</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">transmat_</span><span class="p">)</span>   <span class="c1"># gelerntes A
+</span></code></pre></div></div>
+
+<blockquote>
+  <p>Nach einigen Iterationen nähert sich <code class="language-plaintext highlighter-rouge">transmat_</code> einer Matrix, die die echten Saison‑Wechsel (Winter→Frühling→Sommer→Herbst) widerspiegelt – <strong>ohne</strong> dass die Jahreszeiten je als Label gegeben waren.</p>
+</blockquote>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Mein Portfolio &amp; Wiki</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Mein Portfolio &amp; Wiki</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/werzingerma"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">werzingerma</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Mein persönliches Portfolio, meine Projekte und Notizen</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+<!-- MathJax für LaTeX-Formeln -->
+    <script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']]
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+      processHtmlClass: 'tex2jax_process'
+    }
+  };
+</script>
+<script type="text/javascript" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+  </body>
+
+</html>

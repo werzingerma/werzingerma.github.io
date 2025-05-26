@@ -10,7 +10,7 @@ permalink: /notizen/Sequence_Learning/
 
 1. [Comparing Sequences](01-comparing-sequences/index.md)
 2. [Markov Chains and n-grams](02-markov-chains/index.md)
-3. [Hidden Markov Chains](sql3)
+3. [Hidden Markov Chains](03-hmm/index.md)
 4. [NNets Basics](sql4)
 5. [NNets - Feed-Forward Networks for Sequence Data](sql5)
 6. [Recurrent Neural Networks](sql6)

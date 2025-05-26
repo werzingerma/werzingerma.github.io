@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Wichtige Begriffe & Konzepte
-permalink: /notizen/Sequence_Learning/02-markov-chains/markov_chains_more_topics
+permalink: /notizen/Sequence_Learning/02-markov-chains/markov_chain_terms
 ---
 
 ## Markov‑Annahme

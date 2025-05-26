@@ -1,4 +1,8 @@
-# Beispiel 2 – Tweet‑Generator (Bi‑gram‑Markov‑Kette)
+---
+layout: page
+title: Beispiel 2 – Tweet‑Generator (Bi‑gram‑Markov‑Kette)
+permalink: /notizen/Sequence_Learning/02-markov-chains/markov_chain_example2
+---
 
 Hier wird eine Markov‑Kette aus den Tweets von Donald Trump gebaut, um neue, stilechte Sätze zu erzeugen.
 
