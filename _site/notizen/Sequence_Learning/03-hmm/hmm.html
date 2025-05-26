@@ -3,20 +3,20 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Markov Chains &amp; N-Grams | Mein Portfolio &amp; Wiki</title>
+<title>Hidden Markov Models (HMM) | Mein Portfolio &amp; Wiki</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Markov Chains &amp; N-Grams" />
+<meta property="og:title" content="Hidden Markov Models (HMM)" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Mein persönliches Portfolio, meine Projekte und Notizen" />
 <meta property="og:description" content="Mein persönliches Portfolio, meine Projekte und Notizen" />
-<link rel="canonical" href="http://localhost:4000/notizen/Sequence_Learning/02-markov-chains/index" />
-<meta property="og:url" content="http://localhost:4000/notizen/Sequence_Learning/02-markov-chains/index" />
+<link rel="canonical" href="http://localhost:4000/notizen/Sequence_Learning/03-hmm/hmm" />
+<meta property="og:url" content="http://localhost:4000/notizen/Sequence_Learning/03-hmm/hmm" />
 <meta property="og:site_name" content="Mein Portfolio &amp; Wiki" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Markov Chains &amp; N-Grams" />
+<meta property="twitter:title" content="Hidden Markov Models (HMM)" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Mein persönliches Portfolio, meine Projekte und Notizen","headline":"Markov Chains &amp; N-Grams","url":"http://localhost:4000/notizen/Sequence_Learning/02-markov-chains/index"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Mein persönliches Portfolio, meine Projekte und Notizen","headline":"Hidden Markov Models (HMM)","url":"http://localhost:4000/notizen/Sequence_Learning/03-hmm/hmm"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Mein Portfolio &amp; Wiki" /></head>
 <body><header class="site-header" role="banner">
@@ -39,21 +39,99 @@
         <article class="post">
 
   <header class="post-header">
-    <h1 class="post-title">Markov Chains &amp; N-Grams</h1>
+    <h1 class="post-title">Hidden Markov Models (HMM)</h1>
   </header>
 
   <div class="post-content">
-    <ol>
-  <li><a href="/notizen/Sequence_Learning/02-markov-chains/markov_chain">Markov Chains</a></li>
-  <li><strong>Beispiele</strong>
+    <h2 id="was-ist-ein-hmm">Was ist ein HMM?</h2>
+
+<p>Ein Hidden Markov Model beschreibt einen Prozess, bei dem</p>
+<ul>
+  <li><strong>Zustände</strong> zwar die Dynamik bestimmen, aber <strong>verborgen</strong> sind.</li>
+  <li>Wir sehen nur <strong>Emissionen</strong> (Messwerte, Symbole).</li>
+  <li>Die Zustandsfolge selbst ist eine Markov-Kette 1. Ordnung.</li>
+</ul>
+
+<h2 id="unterschied-zu-markov-ketten">Unterschied zu Markov-Ketten</h2>
+
+<p><strong>Markov-Kette:</strong><br />
+<img src="/assets/images/markov_chain_example_HMM.png" alt="marcov-chain-hmm" /></p>
+
+<p><em>Zustand = Wetter (Rain / Sun / Cloud). Wir sehen direkt, wo wir sind.</em></p>
+
+<p><strong>Hidden Markov Model:</strong><br />
+<img src="/assets/images/hidden_markov_model_hmm.png" alt="hmm" /></p>
+
+<p><em>Zustand = Jahreszeit (Winter / Spring / Summer / Fall) → <strong>hidden</strong></em><br />
+<em>Emission = Wetter (Rain / Sun / Cloud) → <strong>sichtbar</strong></em></p>
+
+<h2 id="wie-sieht-ein-hmm-aus">Wie sieht ein HMM aus?</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Symbol</th>
+      <th>Bedeutung</th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>π</strong></td>
+      <td>Startverteilung: Wahrscheinlichkeit, in welchem Zustand wir beginnen</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><strong>A</strong></td>
+      <td>Übergangsmatrix: aᵢⱼ = P(qₜ = sⱼ</td>
+      <td>qₜ₋₁ = sᵢ)</td>
+    </tr>
+    <tr>
+      <td><strong>B</strong></td>
+      <td>Emissionsmatrix/-verteilung: bⱼ(o) = P(Oₜ = o</td>
+      <td>qₜ = sⱼ)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="wie-funktioniert-das">Wie funktioniert das?</h2>
+
+<ol>
+  <li><strong>Generieren</strong>: Zustand q₁ ∼ π → Emission O₁ ∼ B(q₁) → Übergang zu q₂ ∼ A(q₁,·) …</li>
+  <li><strong>Aufgaben in der Praxis</strong>
     <ul>
-      <li><a href="/notizen/Sequence_Learning/02-markov-chains/markov_chain_example1">Beispiel 1: Wetter‑Simulation</a></li>
-      <li><a href="/notizen/Sequence_Learning/02-markov-chains/markov_chain_example2">Beispiel 2: Tweet‑Generator (Bi‑gram‑Markov‑Kette)</a></li>
+      <li>
+        <table>
+          <tbody>
+            <tr>
+              <td><em>Bewerten</em> P(O</td>
+              <td>λ) → Forward/Backward</td>
+            </tr>
+          </tbody>
+        </table>
+      </li>
+      <li><em>Dekodieren</em> q* → Viterbi</li>
+      <li><em>Parameter lernen</em> λ → Baum-Welch (EM)</li>
     </ul>
   </li>
-  <li><a href="/notizen/Sequence_Learning/02-markov-chains/ngrams">N-Grams</a></li>
-  <li><a href="/notizen/Sequence_Learning/02-markov-chains/markov_chain_terms">Begriffserklärungen</a></li>
 </ol>
+
+<h2 id="wozu-benutzt-man-hmms">Wozu benutzt man HMMs?</h2>
+
+<ul>
+  <li><strong>Spracherkennung</strong> (Phoneme / Wörter)</li>
+  <li><strong>Bioinformatik</strong> (Gene vs. Nicht-Gene)</li>
+  <li><strong>Gesten-, Aktivitäts-, Musik-Analyse</strong></li>
+  <li>Allgemein: sequentielle, verrauschte Daten beliebiger Länge</li>
+</ul>
+
+<hr />
+
+<p>➡ Siehe die beiden praktischen Beispiele in</p>
+<ul>
+  <li><a href="/notizen/Sequence_Learning/03-hmm/hmm_example1">Verkehrsampel</a></li>
+  <li><a href="/notizen/Sequence_Learning/03-hmm/hmm_example2">Wetter + Jahreszeiten</a></li>
+</ul>
 
   </div>
 
