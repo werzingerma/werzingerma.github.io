@@ -20,8 +20,8 @@ Berechne mit aktuellem Modell:
 
 * $\alpha_t(i)$: Forward-Wahrscheinlichkeiten
 * $\beta_t(i)$: Backward-Wahrscheinlichkeiten
-* $\gamma_t(i) = P(q_t = s_i | O)$
-* $\xi_t(i,j) = P(q_t = s_i, q_{t+1} = s_j | O)$
+* $\gamma_t(i) = P(q_t = s_i \| O)$
+* $\xi_t(i,j) = P(q_t = s_i, q_{t+1} = s_j \| O)$
 
 ### M-Schritt (Maximierung)
 

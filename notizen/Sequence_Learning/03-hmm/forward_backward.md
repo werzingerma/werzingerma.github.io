@@ -82,7 +82,7 @@ $$
 
 ### Definition
 
-$\beta_t(i) = P(o_{t+1}, \dots, o_T | q_t = s_i)$
+$\beta_t(i) = P(o_{t+1}, \dots, o_T \| q_t = s_i)$
 
 ### Rekursion
 
