@@ -37,7 +37,7 @@ Bei MLE kann es vorkommen, dass manche Bigramme nie auftreten → Wahrscheinlich
 
 ### Beispiel
 
-* "mag wasser" kommt nie vor → P(wasser | mag) = 0 → Modell bricht zusammen
+* "mag wasser" kommt nie vor → P(wasser \| mag) = 0 → Modell bricht zusammen
 
 ## Lösung: Smoothing
 
