@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Markov-Ketten und N-Grammen
-permalink: /notizen/Sequence_Learning/02-markov-chains/markov-chains_index
+permalink: /notizen/Sequence_Learning/02-markov-chains/index
 ---
 
 ## Allgemeine Einführung
