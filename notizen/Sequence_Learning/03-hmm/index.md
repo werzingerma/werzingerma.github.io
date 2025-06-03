@@ -23,8 +23,8 @@ Ein HMM besteht aus:
 1. **Zustandsmenge** $S = \{s_1, s_2, \dots, s_N\}$
 2. **Beobachtungsalphabet** $O = \{o_1, o_2, \dots, o_M\}$
 3. **Startwahrscheinlichkeiten** $\pi_i = P(q_1 = s_i)$
-4. **Übergangswahrscheinlichkeiten** $a_{ij} = P(q_{t+1} = s_j | q_t = s_i)$
-5. **Emissionswahrscheinlichkeiten** $b_j(o_k) = P(o_k | q_t = s_j)$
+4. **Übergangswahrscheinlichkeiten** $a_{ij} = P(q_{t+1} = s_j \| q_t = s_i)$
+5. **Emissionswahrscheinlichkeiten** $b_j(o_k) = P(o_k \| q_t = s_j)$
 
 ## Beispiel mit Python-Code
 
