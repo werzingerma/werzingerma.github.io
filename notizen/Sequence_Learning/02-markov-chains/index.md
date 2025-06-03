@@ -77,10 +77,8 @@ print("Generierter Text:", " ".join(output))
 Die folgenden Themen werden in separaten Teil behandelt:
 
 1. **Markov-Annahme**: Was sie bedeutet und der Unterschied zur Markov-Kette [Markov-Annahme](markov-annahme.md)
-2. **Token vs. Type**: Unterschied und Relevanz für Sprachverarbeitung [Token vs. Type]()
-3. **Wahrscheinlichkeitsabschätzung**: z.B. Maximum Likelihood Estimation [Wahrscheinlichkeitsabschätzung]()
-4. **Zipf-Verteilung & Smoothing**: Wortfrequenzverteilungen und Techniken zur Vermeidung von Nullwahrscheinlichkeiten [Zipf & Smoothing]()
+2. **Token vs. Type**: Unterschied und Relevanz für Sprachverarbeitung [Token vs. Type](token_type.md)
+3. **Wahrscheinlichkeitsabschätzung**: z.B. Maximum Likelihood Estimation [Wahrscheinlichkeitsabschätzung](wahrscheinlichkeit.md)
+4. **Zipf-Verteilung & Smoothing**: Wortfrequenzverteilungen und Techniken zur Vermeidung von Nullwahrscheinlichkeiten [Zipf & Smoothing](zipf_smoothing.md)
 
 ---
-
-Diese Anleitung ist ideal für den Einstieg in stochastische Modelle für Text und Sprache. Jede weitere Datei vertieft ein zentrales Konzept.
