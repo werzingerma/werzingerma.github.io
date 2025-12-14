@@ -1,29 +1,30 @@
 ---
 layout: page
-title: Meine Projekte
+title: Projekte
 permalink: /projekte/
+projects:
+  - title: Personenbezogene Daten in LLMs
+    tagline: "Beispielprojekt: sichere Verarbeitung sensibler Daten in generativen Modellen."
+    status: Konzept
+    focus: Privacy · AI
+    link: /projekte/personenbezogene-daten-llms/
+    logo: /assets/images/example-project-logo.jpg
 ---
 
-# Meine Projekte
-
-Hier findest du eine Übersicht meiner aktuellen und abgeschlossenen Projekte.
-
-## Aktuelle Projekte
-
-### [Persönlicher Finanztracker](/projekte/finanztracker)
-Ein Tool zur Verwaltung persönlicher Finanzen mit Visualisierung von Ausgabentrends.
-- **Technologien**: Python, Flask, SQLite, Chart.js
-- **Status**: In Entwicklung
-
-### [Lernkarteisystem](/projekte/lernkartei)
-Eine Webanwendung zum Erstellen und Verwalten von Lernkarten mit Spaced-Repetition-Algorithmus.
-- **Technologien**: JavaScript, React, Firebase
-- **Status**: Beta-Version
-
-## Abgeschlossene Projekte
-
-### [Wetterstation](/projekte/wetterstation)
-IoT-Projekt zur Erfassung und Visualisierung von Wetterdaten.
-- **Technologien**: Arduino, C++, MQTT, Node.js
-- **Status**: Abgeschlossen
-- **Ergebnis**: [GitHub-Repository](https://github.com/username/wetterstation)
+<div class="cards-grid">
+  {% for project in page.projects %}
+  <a class="card project-card" href="{{ project.link | relative_url }}">
+    <header>
+      <img class="project-logo" src="{{ project.logo | relative_url }}" alt="{{ project.title }} Logo">
+      <div>
+        <h3>{{ project.title }}</h3>
+        <div class="meta">{{ project.tagline }}</div>
+      </div>
+    </header>
+    <div class="meta">
+      <span class="tag">{{ project.status }}</span>
+      <span class="tag">{{ project.focus }}</span>
+    </div>
+  </a>
+  {% endfor %}
+</div>
