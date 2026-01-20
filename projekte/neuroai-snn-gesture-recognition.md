@@ -8,7 +8,7 @@ permalink: /projekte/neuroai-snn-gesture-recognition/
   <p class="pill">Master's Project · NeuroAI · Deep Learning</p>
   <h2>Gesture Recognition with Spiking Neural Networks</h2>
 
-  <p><strong>Spiking Neural Network implementation for hand gesture recognition using event-based camera data.</strong></p>
+  <p><strong>Using SNNs to classify hand gestures from event camera data.</strong></p>
 
   <p>
     <a href="https://github.com/werzingerma/neuroai-snn-gesture-recognition" class="primary-btn" target="_blank">View on GitHub</a>
@@ -16,40 +16,38 @@ permalink: /projekte/neuroai-snn-gesture-recognition/
 
   <h3>Overview</h3>
   <p>
-    This project implements a Spiking Neural Network (SNN) to recognize hand gestures from the IBM DVS Gesture Dataset. Unlike traditional frame-based cameras, event-based cameras capture movement data asynchronously, making SNNs particularly well-suited for processing this type of temporal information.
+    This project trains a Spiking Neural Network (SNN) to recognize hand gestures from the IBM DVS Gesture Dataset. The data comes from an event-based camera, which works differently from normal cameras - instead of frames, it records individual pixel changes asynchronously. SNNs are a good match for this kind of temporal data.
   </p>
 
-  <h3>Key Results</h3>
+  <h3>Results</h3>
   <ul>
-    <li><strong>Test Accuracy</strong> – Approximately 89%</li>
-    <li><strong>Dataset</strong> – 1,341 gesture samples</li>
-    <li><strong>Classes</strong> – 11 different hand and arm gestures</li>
+    <li><strong>Accuracy</strong> – ~89% on test set</li>
+    <li><strong>Dataset</strong> – 1,341 samples, 11 gesture classes</li>
   </ul>
 
-  <h3>Key Features</h3>
+  <h3>Implementation</h3>
   <ul>
-    <li><strong>Convolutional SNN Architecture</strong> – Uses Leaky Integrate-and-Fire (LIF) neurons</li>
-    <li><strong>Event-based Processing</strong> – Efficiently handles temporal event data from DVS cameras</li>
-    <li><strong>Dataset Analysis</strong> – Comprehensive exploration of the gesture dataset</li>
-    <li><strong>Live Inference</strong> – Real-time gesture classification capabilities</li>
-    <li><strong>Jupyter Notebooks</strong> – Interactive exploration and model training</li>
+    <li>Convolutional SNN with Leaky Integrate-and-Fire (LIF) neurons</li>
+    <li>Event data preprocessing with the Tonic library</li>
+    <li>Dataset exploration and analysis</li>
+    <li>Training and evaluation in Jupyter notebooks</li>
   </ul>
 
-  <h3>Technology Stack</h3>
+  <h3>Built with</h3>
   <table>
-    <tr><td><strong>SNN Framework</strong></td><td>snnTorch (built on PyTorch)</td></tr>
-    <tr><td><strong>Event Data</strong></td><td>Tonic library</td></tr>
+    <tr><td><strong>SNN Framework</strong></td><td>snnTorch</td></tr>
+    <tr><td><strong>Event Data</strong></td><td>Tonic</td></tr>
     <tr><td><strong>Deep Learning</strong></td><td>PyTorch</td></tr>
     <tr><td><strong>Analysis</strong></td><td>NumPy, Scikit-learn, Matplotlib</td></tr>
   </table>
 
-  <h3>What are Spiking Neural Networks?</h3>
+  <h3>What are SNNs?</h3>
   <p>
-    Spiking Neural Networks are a type of artificial neural network that more closely mimics biological neurons. Instead of continuous activation values, SNNs communicate through discrete spikes over time, making them particularly efficient for processing temporal and event-based data. This neuromorphic approach can lead to more energy-efficient implementations on specialized hardware.
+    Spiking Neural Networks try to mimic how biological neurons work. Instead of continuous values, they communicate through discrete spikes over time. This makes them naturally suited for temporal data like event camera output. They can also be very energy-efficient on neuromorphic hardware.
   </p>
 
-  <h3>IBM DVS Gesture Dataset</h3>
+  <h3>About the dataset</h3>
   <p>
-    The dataset was captured using a Dynamic Vision Sensor (DVS), which records changes in light intensity asynchronously. This results in sparse, event-based data that naturally encodes motion information, making it ideal for gesture recognition tasks with SNNs.
+    The IBM DVS Gesture Dataset was recorded with a Dynamic Vision Sensor - a camera that only records changes in light intensity. This produces sparse, event-based data that encodes motion naturally. The dataset contains 11 different hand and arm gestures.
   </p>
 </div>
