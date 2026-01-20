@@ -199,6 +199,8 @@ table td { border: 1px solid #e8e8e8; }
 
 body { background: var(--bg); color: var(--text); font-family: 'Inter', 'Space Grotesk', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.7; min-height: 100vh; transition: background 0.3s ease, color 0.3s ease; }
 
+#snake-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+
 a { color: var(--accent); text-decoration: none; }
 
 a:hover { color: var(--accent-2); }
@@ -273,7 +275,7 @@ a:hover { color: var(--accent-2); }
 
 .pill { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.35rem 0.7rem; background: #eef1f4; border-radius: 999px; font-size: 0.85rem; margin-right: 0.4rem; color: var(--text); }
 
-.cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; margin-top: 1rem; }
+.cards-grid { display: flex; flex-direction: column; gap: 1.25rem; margin-top: 1rem; }
 
 .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.4rem; box-shadow: var(--shadow); transition: transform 0.2s ease, border-color 0.2s ease; }
 
@@ -287,9 +289,9 @@ a:hover { color: var(--accent-2); }
 
 .tag { display: inline-flex; align-items: center; padding: 0.3rem 0.6rem; border-radius: 10px; font-size: 0.85rem; background: #eef1f4; color: var(--text); margin-right: 0.4rem; }
 
-.section-heading { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin: 2rem 0 0.75rem; }
+h2.section-heading { margin: 2.5rem 0 0.5rem; font-size: 1.5rem; color: var(--text); }
 
-.section-heading h2 { margin: 0; }
+.section-description { color: var(--muted); margin: 0 0 1.25rem; font-size: 0.95rem; }
 
 .project-detail { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 1.5rem; box-shadow: var(--shadow); }
 

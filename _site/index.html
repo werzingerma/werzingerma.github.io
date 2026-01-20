@@ -41,7 +41,9 @@
 </header>
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <div class="home-page">
+        <canvas id="snake-canvas"></canvas>
+
+<div class="home-page">
   <section class="hero">
   <div class="hero-card">
     <div class="eyebrow">Student · Code · Data · Analyst</div>
@@ -60,6 +62,304 @@
 </section>
 
 </div>
+
+<script>
+(function() {
+  const canvas = document.getElementById('snake-canvas');
+  const ctx = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const gridSize = 20;
+  const snakeLength = 15;
+  const speed = 100;
+
+  // 4 snakes with different colors (darker tones)
+  const colors = [
+    { r: 34, g: 139, b: 34 },   // forest green
+    { r: 70, g: 130, b: 180 },  // steel blue
+    { r: 178, g: 102, b: 255 }, // purple
+    { r: 205, g: 92, b: 92 }    // indian red
+  ];
+
+  const snakes = [];
+
+  // Initialize 4 snakes at different positions
+  for (let s = 0; s < 4; s++) {
+    const snake = {
+      segments: [],
+      direction: { x: 1, y: 0 },
+      nextDirection: { x: 1, y: 0 },
+      color: colors[s]
+    };
+
+    // Random starting positions
+    const startX = Math.floor(Math.random() * (canvas.width / gridSize));
+    const startY = Math.floor(Math.random() * (canvas.height / gridSize));
+
+    // Random initial direction
+    const dirs = [{ x: 1, y: 0 }, { x: -1, y: 0 }, { x: 0, y: 1 }, { x: 0, y: -1 }];
+    snake.direction = dirs[Math.floor(Math.random() * dirs.length)];
+    snake.nextDirection = { ...snake.direction };
+
+    for (let i = 0; i < snakeLength; i++) {
+      snake.segments.push({
+        x: startX - i * snake.direction.x,
+        y: startY - i * snake.direction.y
+      });
+    }
+    snakes.push(snake);
+  }
+
+  function randomDirection(currentDir) {
+    const dirs = [
+      { x: 1, y: 0 },
+      { x: -1, y: 0 },
+      { x: 0, y: 1 },
+      { x: 0, y: -1 }
+    ];
+    const valid = dirs.filter(d =>
+      !(d.x === -currentDir.x && d.y === -currentDir.y)
+    );
+    return valid[Math.floor(Math.random() * valid.length)];
+  }
+
+  function update() {
+    const maxX = Math.floor(canvas.width / gridSize);
+    const maxY = Math.floor(canvas.height / gridSize);
+
+    snakes.forEach(snake => {
+      // Randomly change direction occasionally
+      if (Math.random() < 0.08) {
+        snake.nextDirection = randomDirection(snake.direction);
+      }
+
+      snake.direction = snake.nextDirection;
+
+      const head = snake.segments[0];
+      let newHead = {
+        x: head.x + snake.direction.x,
+        y: head.y + snake.direction.y
+      };
+
+      // Wrap around screen edges
+      if (newHead.x < 0) newHead.x = maxX - 1;
+      if (newHead.x >= maxX) newHead.x = 0;
+      if (newHead.y < 0) newHead.y = maxY - 1;
+      if (newHead.y >= maxY) newHead.y = 0;
+
+      // Check self collision
+      const willCollide = snake.segments.slice(0, -1).some(s => s.x === newHead.x && s.y === newHead.y);
+      if (willCollide) {
+        snake.nextDirection = randomDirection(snake.direction);
+        snake.direction = snake.nextDirection;
+        newHead = {
+          x: head.x + snake.direction.x,
+          y: head.y + snake.direction.y
+        };
+        if (newHead.x < 0) newHead.x = maxX - 1;
+        if (newHead.x >= maxX) newHead.x = 0;
+        if (newHead.y < 0) newHead.y = maxY - 1;
+        if (newHead.y >= maxY) newHead.y = 0;
+      }
+
+      snake.segments.unshift(newHead);
+      snake.segments.pop();
+    });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    snakes.forEach(snake => {
+      snake.segments.forEach((segment, index) => {
+        const alpha = 0.25 - (index / snakeLength) * 0.2;
+        const { r, g, b } = snake.color;
+        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
+        ctx.beginPath();
+        ctx.roundRect(
+          segment.x * gridSize + 2,
+          segment.y * gridSize + 2,
+          gridSize - 4,
+          gridSize - 4,
+          4
+        );
+        ctx.fill();
+      });
+    });
+  }
+
+  function loop() {
+    update();
+    draw();
+  }
+
+  setInterval(loop, speed);
+})();
+
+// Pac-Man Animation
+(function() {
+  const pacmanContainer = document.createElement('div');
+  pacmanContainer.id = 'pacman-runner';
+  document.body.appendChild(pacmanContainer);
+
+  const ghostColors = ['#ff0000', '#00ffff', '#ffb8ff']; // red, cyan, pink
+
+  function createPacman() {
+    const pacman = document.createElement('div');
+    pacman.className = 'pacman';
+    pacman.innerHTML = `
+      <div class="pacman-body">
+        <div class="pacman-top"></div>
+        <div class="pacman-bottom"></div>
+      </div>
+    `;
+    return pacman;
+  }
+
+  function createGhost(color, delay) {
+    const ghost = document.createElement('div');
+    ghost.className = 'ghost';
+    ghost.style.left = (-50 - delay * 50) + 'px';
+    ghost.innerHTML = `
+      <svg viewBox="0 0 32 32" width="36" height="36">
+        <path d="M4,30 L4,14 A12,12 0 0,1 28,14 L28,30 L24,26 L20,30 L16,26 L12,30 L8,26 Z" fill="${color}"/>
+        <circle cx="11" cy="14" r="4" fill="white"/>
+        <circle cx="21" cy="14" r="4" fill="white"/>
+        <circle cx="13" cy="14" r="2" fill="#111"/>
+        <circle cx="23" cy="14" r="2" fill="#111"/>
+      </svg>
+    `;
+    return ghost;
+  }
+
+  function runPacman() {
+    // Clear previous
+    pacmanContainer.innerHTML = '';
+
+    // Create Pac-Man
+    const pacman = createPacman();
+    pacmanContainer.appendChild(pacman);
+
+    // Create 3 ghosts with staggered positions
+    ghostColors.forEach((color, i) => {
+      const ghost = createGhost(color, i + 1);
+      pacmanContainer.appendChild(ghost);
+    });
+
+    // Remove after animation
+    setTimeout(() => {
+      pacmanContainer.innerHTML = '';
+    }, 8000);
+  }
+
+  // Run randomly every 15-30 seconds
+  function scheduleNext() {
+    const delay = 15000 + Math.random() * 15000;
+    setTimeout(() => {
+      runPacman();
+      scheduleNext();
+    }, delay);
+  }
+
+  // Initial run after 3 seconds
+  setTimeout(() => {
+    runPacman();
+    scheduleNext();
+  }, 3000);
+})();
+</script>
+
+<style>
+#pacman-runner {
+  position: fixed;
+  bottom: 100px;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  pointer-events: none;
+  z-index: 100;
+  overflow: visible;
+}
+
+#pacman-runner .pacman {
+  position: absolute;
+  left: -50px;
+  width: 40px;
+  height: 40px;
+  animation: runAcross 6s linear forwards;
+}
+
+#pacman-runner .pacman-body {
+  width: 40px;
+  height: 40px;
+  position: relative;
+}
+
+#pacman-runner .pacman-top,
+#pacman-runner .pacman-bottom {
+  position: absolute;
+  width: 40px;
+  height: 20px;
+  background: #ffcc00;
+  left: 0;
+}
+
+#pacman-runner .pacman-top {
+  top: 0;
+  border-radius: 40px 40px 0 0;
+  animation: chompTop 0.15s infinite;
+  transform-origin: bottom center;
+}
+
+#pacman-runner .pacman-bottom {
+  bottom: 0;
+  border-radius: 0 0 40px 40px;
+  animation: chompBottom 0.15s infinite;
+  transform-origin: top center;
+}
+
+#pacman-runner .pacman-top::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #111;
+  border-radius: 50%;
+  top: 6px;
+  left: 22px;
+}
+
+@keyframes chompTop {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-15deg); }
+}
+
+@keyframes chompBottom {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(15deg); }
+}
+
+#pacman-runner .ghost {
+  position: absolute;
+  animation: runAcross 6s linear forwards, ghostFloat 0.3s ease-in-out infinite;
+}
+
+@keyframes runAcross {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(100vw + 250px)); }
+}
+
+@keyframes ghostFloat {
+  0%, 100% { margin-top: 0; }
+  50% { margin-top: -4px; }
+}
+</style>
 
       </div>
     </main>
