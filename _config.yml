@@ -18,7 +18,6 @@ plugins:
 header_pages:
   - index.md
   - projekte/index.md
-  - academics.md
   - music-attributions.md
   - notizen/index.md
 

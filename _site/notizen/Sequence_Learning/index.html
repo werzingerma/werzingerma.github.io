@@ -3,9 +3,9 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Sequence-Learning - Vorlesung | Mein Portfolio &amp; Wiki</title>
+<title>Sequence Learning | Mein Portfolio &amp; Wiki</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Sequence-Learning - Vorlesung" />
+<meta property="og:title" content="Sequence Learning" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Mein persönliches Portfolio, meine Projekte und Notizen" />
 <meta property="og:description" content="Mein persönliches Portfolio, meine Projekte und Notizen" />
@@ -14,9 +14,9 @@
 <meta property="og:site_name" content="Mein Portfolio &amp; Wiki" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Sequence-Learning - Vorlesung" />
+<meta property="twitter:title" content="Sequence Learning" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Mein persönliches Portfolio, meine Projekte und Notizen","headline":"Sequence-Learning - Vorlesung","url":"http://localhost:4000/notizen/Sequence_Learning/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Mein persönliches Portfolio, meine Projekte und Notizen","headline":"Sequence Learning","url":"http://localhost:4000/notizen/Sequence_Learning/"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,8 +34,7 @@
     <nav class="site-nav">
       <a class="page-link" href="/">Home</a>
       <a class="page-link" href="/projekte/">Projects</a>
-      <a class="page-link" href="/academics/">Academics</a>
-      <a class="page-link" href="/notizen/">Notizen</a>
+      <a class="page-link" href="/notizen/">Notes</a>
     </nav>
   </div>
 </header>
@@ -44,47 +43,83 @@
         <article class="post">
 
   <header class="post-header">
-    <h1 class="post-title">Sequence-Learning - Vorlesung</h1>
+    <h1 class="post-title">Sequence Learning</h1>
   </header>
 
   <div class="post-content">
-    <h1 id="sequence-learning-vorlesung">Sequence-Learning Vorlesung</h1>
+    <div class="note-page">
+  <p class="pill">University · Master · TH Nürnberg</p>
 
-<h2 id="inhaltsverzeichnis">Inhaltsverzeichnis</h2>
+  <p>Notes from the Sequence Learning course at TH Nürnberg. Covers everything from basic sequence comparison to modern transformer architectures.</p>
 
-<ol>
-  <li><a href="/notizen/Sequence_Learning/01-comparing-sequences/index">Comparing Sequences</a></li>
-  <li><a href="/notizen/Sequence_Learning/02-markov-chains/index">Markov Chains and n-grams</a></li>
-  <li><a href="/notizen/Sequence_Learning/03-hmm/index">Hidden Markov Chains</a></li>
-  <li><a href="sql4">NNets Basics</a></li>
-  <li><a href="sql5">NNets - Feed-Forward Networks for Sequence Data</a></li>
-  <li><a href="sql6">Recurrent Neural Networks</a></li>
-  <li><a href="sql7">Attention</a></li>
-  <li><a href="sql8">Sequence to Sequence - ctc</a></li>
-  <li><a href="sql9">RNN-T Based ASR Systems</a></li>
-  <li><a href="sql10">Transfer Learning</a></li>
-  <li><a href="sql11">The Evolution of GPT</a></li>
-  <li><a href="sql12">Reinforcement Learning</a></li>
-</ol>
+  <h3>Course Content</h3>
 
-<h2 id="ressourcen">Ressourcen</h2>
+  <h4>1. Comparing Sequences</h4>
+  <p>How to measure similarity between sequences using different distance metrics and alignment algorithms.</p>
+  <ul>
+    <li><a href="01-comparing-sequences/hamming_distance">Hamming Distance</a></li>
+    <li><a href="01-comparing-sequences/levenshtein_distance">Levenshtein Distance</a></li>
+    <li><a href="01-comparing-sequences/needleman_wunsch">Needleman-Wunsch Algorithm</a></li>
+    <li><a href="01-comparing-sequences/dynamic_time_warping">Dynamic Time Warping</a></li>
+    <li><a href="01-comparing-sequences/cost_modelling">Cost Modeling</a></li>
+  </ul>
 
-<h3 id="empfohlene-literatur">Empfohlene Literatur</h3>
+  <h4>2. Markov Chains &amp; N-Grams</h4>
+  <p>Statistical models for sequences where the next state depends only on the current state.</p>
+  <ul>
+    <li><a href="02-markov-chains/markov-annahme">Markov Assumption</a></li>
+    <li><a href="02-markov-chains/token_type">Token vs Type</a></li>
+    <li><a href="02-markov-chains/wahrscheinlichkeit">Probability Estimation</a></li>
+    <li><a href="02-markov-chains/zipf_smoothing">Zipf Distribution &amp; Smoothing</a></li>
+  </ul>
 
-<ul>
-  <li>Chao, K.-M. and Zhang, L.: Sequence Comparison (Springer). available online through Ohm Library</li>
-  <li>Sun, R., Giles, L. and van Leeuwen, J.: Sequence Learning: Paradigms, Algorithms and Applications (Springer). available online through Ohm Library</li>
-  <li>Huang, Acero, Hon: Spoken Language Processing: A Guide to Theory, Algorithm and System Development. (ISBN-13: 978-0130226167)</li>
-  <li>Jurafsky, D and Martin, J: Speech and Language Processing. 2017 (available online)</li>
-  <li>Manning, C, Raghavan P and Schütze, H: Introduction to Information Retrieval, Cambridge University Press. 2008. (available online)</li>
-  <li>Goodfellow, I and Bengio,Y and Courville, A: Deep Learning. 2016 (available online)</li>
-  <li>Schukat-Talamazzini, E.-G. Automatische Spracherkennung. 1995 (available online)</li>
-</ul>
+  <h4>3. Hidden Markov Models</h4>
+  <p>Models where the underlying states are not directly observable, only their emissions.</p>
+  <ul>
+    <li><a href="03-hmm/beobachtungsmodell">Observation Model</a></li>
+    <li><a href="03-hmm/forward_backward">Forward-Backward Algorithm</a></li>
+    <li><a href="03-hmm/viterbi">Viterbi Decoding</a></li>
+    <li><a href="03-hmm/baum_welch">Baum-Welch Training</a></li>
+    <li><a href="03-hmm/isolated_word_recognition">Isolated Word Recognition</a></li>
+  </ul>
 
-<h3 id="nützliche-links">Nützliche Links</h3>
-<ul>
-  <li><a href="https://seqlrn.github.io/">Sequence-Learning-Page</a></li>
-</ul>
+  <h4>4. Neural Networks Basics</h4>
+  <p>Fundamentals: feedforward networks, autoencoders, Word2Vec, FastText.</p>
+
+  <h4>5. Convolutional Networks for Sequences</h4>
+  <p>CNNs for sequence data, embeddings, HMM-DNN hybrids.</p>
+
+  <h4>6. Recurrent Neural Networks</h4>
+  <p>RNN, LSTM, GRU architectures for sequential processing.</p>
+
+  <h4>7. Attention Mechanisms</h4>
+  <p>How attention allows models to focus on relevant parts of the input.</p>
+
+  <h4>8. Sequence-to-Sequence &amp; CTC</h4>
+  <p>Encoder-decoder architectures and Connectionist Temporal Classification.</p>
+
+  <h4>9. RNN-Transducers</h4>
+  <p>Streaming sequence-to-sequence models for ASR systems.</p>
+
+  <h4>10. Transformers</h4>
+  <p>Self-attention, BERT, GPT, Wav2Vec2.</p>
+
+  <h4>11. Large Language Models</h4>
+  <p>Pre-training, instruction fine-tuning, RLHF.</p>
+
+  <h4>12. Reinforcement Learning</h4>
+  <p>RL applications in sequence tasks.</p>
+
+  <h3>Resources</h3>
+  <ul>
+    <li><a href="https://seqlrn.github.io/" target="_blank">Course Page</a></li>
+    <li><a href="https://github.com/seqlrn/assignments" target="_blank">Assignments Repository</a></li>
+    <li><a href="http://web.stanford.edu/~jurafsky/slp3/" target="_blank">Speech and Language Processing (Jurafsky)</a></li>
+    <li><a href="http://www.deeplearningbook.org/" target="_blank">Deep Learning Book</a></li>
+    <li><a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/" target="_blank">Understanding LSTMs</a></li>
+    <li><a href="https://jalammar.github.io/illustrated-transformer/" target="_blank">The Illustrated Transformer</a></li>
+  </ul>
+</div>
 
   </div>
 
