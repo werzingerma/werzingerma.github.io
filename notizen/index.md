@@ -4,30 +4,249 @@ title: Notes
 permalink: /notizen/
 ---
 
-# Notizen
+<main class="terminal">
+  <h1>Notizen</h1>
 
-Zeug das ich mir aufschreibe damit ich's nicht vergesse.
+  <div class="terminal-window">
+    <div class="terminal-header">
+      <span class="terminal-prompt">$ ls ~/notizen</span>
+    </div>
 
-## Oft gebraucht
-- [Git](/notizen/git/) – Befehle die ich ständig nachschlage
-- [Docker](/notizen/docker/) – Dockerfile, Compose, die üblichen Commands
+    <div class="terminal-content">
+      <!-- Languages -->
+      <div class="directory">
+        <span class="dir-header">drwxr-xr-x  languages/</span>
+        <ul>
+          <li>
+            <span class="tree">└── </span>
+            <a href="/notizen/rust/">rust</a>
+            <span class="comment"># <span class="wip">[wip]</span> ownership, borrowing</span>
+          </li>
+        </ul>
+      </div>
 
-## Machine Learning
-- [ML Basics](/notizen/machine-learning/) – PyTorch, Training, Architectures
-- [Spiking Neural Networks](/notizen/spiking-neural-networks/) – LIF, Event-Kameras, snnTorch
-- [Data Visualization](/notizen/data-visualization/) – Matplotlib, Seaborn, Plotly
+      <!-- Frameworks -->
+      <div class="directory">
+        <span class="dir-header">drwxr-xr-x  frameworks/</span>
+        <ul>
+          <li>
+            <span class="tree">├── </span>
+            <a href="/notizen/machine-learning/">pytorch</a>
+            <span class="comment"># training, models</span>
+          </li>
+          <li>
+            <span class="tree">├── </span>
+            <a href="/notizen/svelte/">svelte</a>
+            <span class="comment"># reactive frontend</span>
+          </li>
+          <li>
+            <span class="tree">└── </span>
+            <a href="/notizen/tauri/">tauri</a>
+            <span class="comment"># rust + webview desktop</span>
+          </li>
+        </ul>
+      </div>
 
-## Web & Desktop
-- [Svelte](/notizen/svelte/) – mein Go-to fürs Frontend
-- [Tauri](/notizen/tauri/) – Desktop-Apps ohne Electron-Bloat
-- [PWAs](/notizen/pwa-service-workers/) – Offline-Apps, Service Worker
+      <!-- Tools -->
+      <div class="directory">
+        <span class="dir-header">drwxr-xr-x  tools/</span>
+        <ul>
+          <li>
+            <span class="tree">├── </span>
+            <a href="/notizen/git/">git</a>
+            <span class="comment"># version control</span>
+          </li>
+          <li>
+            <span class="tree">├── </span>
+            <a href="/notizen/docker/">docker</a>
+            <span class="comment"># containers</span>
+          </li>
+          <li>
+            <span class="tree">├── </span>
+            <a href="/notizen/quarto/">quarto</a>
+            <span class="comment"># notebooks → papers</span>
+          </li>
+          <li>
+            <span class="tree">└── </span>
+            <a href="/notizen/streamlit/">streamlit</a>
+            <span class="comment"># python dashboards</span>
+          </li>
+        </ul>
+      </div>
 
-## Tools
-- [Quarto](/notizen/quarto/) – Papers aus Notebooks
-- [Streamlit](/notizen/streamlit/) – Quick & Dirty Dashboards
+      <!-- Topics -->
+      <div class="directory">
+        <span class="dir-header">drwxr-xr-x  topics/</span>
+        <ul>
+          <li>
+            <span class="tree">├── </span>
+            <a href="/notizen/spiking-neural-networks/">snn</a>
+            <span class="comment"># neuromorphic computing</span>
+            <span class="star">★</span>
+          </li>
+          <li>
+            <span class="tree">├── </span>
+            <a href="/notizen/data-visualization/">data-viz</a>
+            <span class="comment"># matplotlib, plotly</span>
+          </li>
+          <li>
+            <span class="tree">└── </span>
+            <a href="/notizen/pwa-service-workers/">pwa</a>
+            <span class="comment"># offline web apps</span>
+          </li>
+        </ul>
+      </div>
 
-## Lerne ich gerade
-- [Rust](/notizen/rust/) – noch am Anfang
+      <!-- Uni -->
+      <div class="directory">
+        <span class="dir-header">drwxr-xr-x  uni/</span>
+        <ul>
+          <li>
+            <span class="tree">└── </span>
+            <a href="/notizen/Sequence_Learning/">sequence-learning</a>
+            <span class="comment"># master ws24/25</span>
+          </li>
+        </ul>
+      </div>
 
-## Uni
-- [Sequence Learning](/notizen/Sequence_Learning/) – Vorlesungsnotizen
+    </div>
+  </div>
+</main>
+
+<style>
+/* Terminal Container */
+.terminal {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.terminal h1 {
+  font-family: inherit;
+  margin-bottom: 1.5rem;
+}
+
+/* Terminal Window */
+.terminal-window {
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.terminal-header {
+  background: #161b22;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #30363d;
+}
+
+.terminal-prompt {
+  font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace;
+  font-size: 0.9rem;
+  color: #7ee787;
+}
+
+.terminal-prompt::after {
+  content: '▋';
+  animation: blink 1s step-end infinite;
+  margin-left: 0.5rem;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.terminal-content {
+  padding: 1rem 1.25rem;
+  font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace;
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+
+/* Directories */
+.directory {
+  margin-bottom: 1.25rem;
+}
+
+.directory:last-child {
+  margin-bottom: 0;
+}
+
+.dir-header {
+  color: #8b949e;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.directory ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  padding-left: 1rem;
+}
+
+.directory li {
+  display: flex;
+  align-items: baseline;
+  gap: 0;
+  white-space: nowrap;
+}
+
+.directory li:hover {
+  background: rgba(88, 166, 255, 0.1);
+  margin-left: -0.5rem;
+  padding-left: 0.5rem;
+  margin-right: -0.5rem;
+  padding-right: 0.5rem;
+}
+
+/* Tree Characters */
+.tree {
+  color: #484f58;
+  user-select: none;
+}
+
+/* Links */
+.terminal-content a {
+  color: #58a6ff;
+  text-decoration: none;
+  min-width: 120px;
+  display: inline-block;
+}
+
+.terminal-content a:hover {
+  text-decoration: underline;
+}
+
+/* Comments */
+.comment {
+  color: #6e7681;
+  margin-left: 0.5rem;
+}
+
+/* Special Markers */
+.star {
+  color: #f0c14b;
+  margin-left: 0.5rem;
+}
+
+.wip {
+  color: #f85149;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .terminal-content {
+    font-size: 0.75rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .terminal-content a {
+    min-width: 90px;
+  }
+
+  .comment {
+    display: none;
+  }
+}
+</style>
