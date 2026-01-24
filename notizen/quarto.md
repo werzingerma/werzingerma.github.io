@@ -4,246 +4,95 @@ title: Quarto
 permalink: /notizen/quarto/
 ---
 
-<p class="pill">Notes · Publishing · Scientific Writing</p>
+# Quarto
 
-Quarto is a publishing system for creating documents, presentations, websites, and books from Markdown and Jupyter notebooks.
+Jupyter Notebooks als Paper publishen. Markdown + Code = PDF/HTML/Word.
 
-### Why Quarto?
+Benutzt für: [Quarto Workflow](/projekte/osws-scientific-report/)
 
-- Write in Markdown or Jupyter notebooks
-- Output to HTML, PDF, Word, presentations
-- Built-in support for citations, cross-references, figures
-- Multiple journal templates (Springer, Elsevier, Nature, etc.)
-- Great for reproducible research
+Stand: Januar 2025
 
-### Installation
+---
+
+## Basics
 
 ```bash
-# macOS
 brew install quarto
-
-# Or download from quarto.org
-```
-
-### Basic document
-
-Create `document.qmd`:
-
-```markdown
----
-title: "My Document"
-author: "Max"
-format: html
----
-
-## Introduction
-
-This is a Quarto document with **markdown** and code.
-
-```{python}
-import pandas as pd
-df = pd.DataFrame({'x': [1, 2, 3], 'y': [4, 5, 6]})
-df
-```
-
-## Conclusion
-
-That's it!
-```
-
-Render it:
-
-```bash
 quarto render document.qmd
 ```
 
+```markdown
+---
+title: "Mein Paper"
+author: "Max"
+format: pdf
+bibliography: refs.bib
 ---
 
-## Output formats
+## Einleitung
 
-### HTML
+Laut @smith2020 ist das wichtig.
 
-```yaml
----
-format:
-  html:
-    toc: true
-    toc-depth: 2
-    theme: cosmo
-    code-fold: true
----
+```{python}
+import pandas as pd
+df = pd.read_csv("data.csv")
+df.describe()
+```
 ```
 
-### PDF (requires LaTeX)
+## Output-Formate
 
 ```yaml
----
+# PDF (braucht LaTeX)
 format:
   pdf:
     documentclass: article
-    papersize: a4
-    fontsize: 11pt
----
-```
 
-### Word
-
-```yaml
----
+# HTML mit Inhaltsverzeichnis
 format:
-  docx:
-    reference-doc: template.docx
----
-```
+  html:
+    toc: true
+    code-fold: true
 
-### Multiple formats
-
-```yaml
----
+# Mehrere gleichzeitig
 format:
   html: default
   pdf: default
-  docx: default
----
 ```
 
----
-
-## Citations
-
-### BibTeX file
-
-Create `references.bib`:
+## Zitieren
 
 ```bibtex
+# refs.bib
 @article{smith2020,
   author = {Smith, John},
-  title = {A Great Paper},
-  journal = {Journal of Examples},
-  year = {2020},
-  volume = {1},
-  pages = {1-10}
+  title = {A Paper},
+  year = {2020}
 }
 ```
 
-### Use in document
-
-```yaml
----
-bibliography: references.bib
-csl: apa.csl
----
-```
-
 ```markdown
-According to @smith2020, this is important.
-
-Multiple citations [@smith2020; @jones2021].
-
-This is also important [see @smith2020, p. 5].
+Nach @smith2020 ist das so.
+Mehrere Quellen [@smith2020; @jones2021].
 ```
 
----
-
-## Figures and tables
-
-### Figures with captions
-
-```markdown
-![A descriptive caption](image.png){#fig-myimage width=80%}
-
-See @fig-myimage for details.
-```
-
-### Tables
-
-```markdown
-| Column 1 | Column 2 |
-|----------|----------|
-| A        | B        |
-| C        | D        |
-
-: My table caption {#tbl-mytable}
-
-See @tbl-mytable.
-```
-
-### Code output as figure
-
-````markdown
-```{python}
-#| label: fig-plot
-#| fig-cap: "A scatter plot"
-
-import matplotlib.pyplot as plt
-plt.scatter([1,2,3], [4,5,6])
-plt.show()
-```
-````
-
----
-
-## Journal templates
+## Journal Templates
 
 ```bash
-# List available templates
-quarto use template quarto-journals/
-
-# Use specific template
 quarto use template quarto-journals/elsevier
 ```
 
-Common templates:
-- `quarto-journals/elsevier`
-- `quarto-journals/plos`
-- `quarto-journals/jss`
-- `quarto-journals/acs`
+Gibt's für Springer, Nature, PLOS, etc.
+
+## Was ich gelernt hab
+
+- LaTeX-Fehler sind kryptisch. Erstmal HTML rendern zum Testen
+- `code-fold: true` ist super für Papers – Code da, aber versteckt
+- GitHub Actions für automatisches Rendering funktioniert gut
 
 ---
 
-## Projects and websites
-
-### Create project
-
-```bash
-quarto create-project mysite --type website
-```
-
-### _quarto.yml
-
-```yaml
-project:
-  type: website
-
-website:
-  title: "My Site"
-  navbar:
-    left:
-      - href: index.qmd
-        text: Home
-      - href: about.qmd
-        text: About
-
-format:
-  html:
-    theme: cosmo
-```
-
-### Preview and publish
-
-```bash
-# Preview locally
-quarto preview
-
-# Render all
-quarto render
-
-# Publish to GitHub Pages
-quarto publish gh-pages
-```
-
-### Resources
+## Links
 
 - [Quarto Docs](https://quarto.org/docs/guide/)
-- [Quarto Gallery](https://quarto.org/docs/gallery/)
 - [Journal Templates](https://quarto.org/docs/journals/)

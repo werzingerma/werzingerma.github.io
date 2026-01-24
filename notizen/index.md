@@ -4,99 +4,30 @@ title: Notes
 permalink: /notizen/
 ---
 
-<div class="notes-overview">
-  <p>A collection of notes on topics I find interesting.</p>
+# Notizen
 
-  <h3>Topics</h3>
-  <div class="notes-grid">
-    <a href="/notizen/machine-learning/" class="note-card">
-      <h4>Machine Learning</h4>
-      <p>Neural networks, PyTorch, transformers, training tips</p>
-    </a>
-    <a href="/notizen/spiking-neural-networks/" class="note-card">
-      <h4>Spiking Neural Networks</h4>
-      <p>LIF neurons, event cameras, neuromorphic computing</p>
-    </a>
-    <a href="/notizen/data-visualization/" class="note-card">
-      <h4>Data Visualization</h4>
-      <p>Matplotlib, Seaborn, Plotly, chart design</p>
-    </a>
-    <a href="/notizen/git/" class="note-card">
-      <h4>Git</h4>
-      <p>Workflows, GitHub Actions, GitHub Pages</p>
-    </a>
-    <a href="/notizen/docker/" class="note-card">
-      <h4>Docker</h4>
-      <p>Containers, Dockerfile, Docker Compose</p>
-    </a>
-    <a href="/notizen/pwa-service-workers/" class="note-card">
-      <h4>PWAs & Service Workers</h4>
-      <p>Offline apps, caching strategies, manifest</p>
-    </a>
-    <a href="/notizen/tauri/" class="note-card">
-      <h4>Tauri</h4>
-      <p>Desktop apps with web frontend and Rust backend</p>
-    </a>
-    <a href="/notizen/rust/" class="note-card">
-      <h4>Rust</h4>
-      <p>Ownership, borrowing, error handling</p>
-    </a>
-    <a href="/notizen/quarto/" class="note-card">
-      <h4>Quarto</h4>
-      <p>Scientific publishing, citations, PDF/HTML output</p>
-    </a>
-    <a href="/notizen/streamlit/" class="note-card">
-      <h4>Streamlit</h4>
-      <p>Python dashboards, widgets, data apps</p>
-    </a>
-    <a href="/notizen/svelte/" class="note-card">
-      <h4>Svelte</h4>
-      <p>Reactive frontend, components, stores</p>
-    </a>
-  </div>
+Zeug das ich mir aufschreibe damit ich's nicht vergesse.
 
-  <h3>University Notes</h3>
-  <div class="notes-grid">
-    <a href="/notizen/Sequence_Learning/" class="note-card">
-      <h4>Sequence Learning</h4>
-      <p>Sequence comparison, Markov chains, HMMs, Transformers</p>
-    </a>
-  </div>
-</div>
+## Oft gebraucht
+- [Git](/notizen/git/) – Befehle die ich ständig nachschlage
+- [Docker](/notizen/docker/) – Dockerfile, Compose, die üblichen Commands
 
-<style>
-.notes-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1rem;
-  margin: 1.5rem 0;
-}
+## Machine Learning
+- [ML Basics](/notizen/machine-learning/) – PyTorch, Training, Architectures
+- [Spiking Neural Networks](/notizen/spiking-neural-networks/) – LIF, Event-Kameras, snnTorch
+- [Data Visualization](/notizen/data-visualization/) – Matplotlib, Seaborn, Plotly
 
-.note-card {
-  display: block;
-  padding: 1.25rem;
-  background: var(--card-bg, #f8f9fa);
-  border-radius: 8px;
-  text-decoration: none;
-  color: inherit;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  border: 1px solid var(--border-color, #e9ecef);
-}
+## Web & Desktop
+- [Svelte](/notizen/svelte/) – mein Go-to fürs Frontend
+- [Tauri](/notizen/tauri/) – Desktop-Apps ohne Electron-Bloat
+- [PWAs](/notizen/pwa-service-workers/) – Offline-Apps, Service Worker
 
-.note-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
+## Tools
+- [Quarto](/notizen/quarto/) – Papers aus Notebooks
+- [Streamlit](/notizen/streamlit/) – Quick & Dirty Dashboards
 
-.note-card h4 {
-  margin: 0 0 0.5rem 0;
-  color: var(--link-color, #4a90d9);
-  font-size: 1.1rem;
-}
+## Lerne ich gerade
+- [Rust](/notizen/rust/) – noch am Anfang
 
-.note-card p {
-  margin: 0;
-  font-size: 0.9rem;
-  color: var(--text-muted, #6c757d);
-}
-</style>
+## Uni
+- [Sequence Learning](/notizen/Sequence_Learning/) – Vorlesungsnotizen

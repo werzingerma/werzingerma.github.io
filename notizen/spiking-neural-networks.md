@@ -4,101 +4,108 @@ title: Spiking Neural Networks
 permalink: /notizen/spiking-neural-networks/
 ---
 
-<p class="pill">Notes · NeuroAI · Neuromorphic</p>
+# Spiking Neural Networks
 
-SNNs are neural networks that communicate through discrete spikes over time, similar to biological neurons.
+Notizen zu SNNs, Event-Kameras, neuromorphic Computing.
 
-### Why SNNs?
+Mein Hauptthema im Master – siehe auch [SNN Gesture Recognition](/projekte/neuroai-snn-gesture-recognition/) und meine Thesis.
 
-Traditional neural networks process everything at once. SNNs process information over time through spikes. This makes them naturally suited for temporal data (like event cameras) and potentially very energy-efficient on specialized hardware.
+Stand: Januar 2025
 
-### The Leaky Integrate-and-Fire (LIF) neuron
+---
 
-The simplest spiking neuron model. It accumulates input over time, "leaks" some of it, and fires a spike when it crosses a threshold.
+## Warum SNNs?
+
+Normale NNs: Alles auf einmal berechnen, floats überall.
+SNNs: Zeitlich verteilte Spikes, binär, energieeffizient.
+
+Für Event-Kameras perfekt weil die Daten schon zeitlich/sparse sind.
+
+## LIF Neuron (Leaky Integrate-and-Fire)
+
+Das simpelste Modell. Membranpotential akkumuliert Input, leakt über Zeit, feuert Spike wenn Threshold erreicht.
 
 ```python
 import snntorch as snn
-import torch.nn as nn
 
-class SpikingNet(nn.Module):
-    def __init__(self):
-        super().__init__()
-        # beta = decay rate (how fast membrane potential leaks)
-        self.fc1 = nn.Linear(784, 128)
-        self.lif1 = snn.Leaky(beta=0.9)
-        self.fc2 = nn.Linear(128, 10)
-        self.lif2 = snn.Leaky(beta=0.9)
+# beta = wie schnell leakt das Potential (0.9 = langsam, 0.5 = schnell)
+lif = snn.Leaky(beta=0.9, threshold=1.0)
 
-    def forward(self, x):
-        mem1 = self.lif1.init_leaky()
-        mem2 = self.lif2.init_leaky()
-        spk_rec = []
-
-        for step in range(x.size(0)):
-            cur1 = self.fc1(x[step])
-            spk1, mem1 = self.lif1(cur1, mem1)
-            cur2 = self.fc2(spk1)
-            spk2, mem2 = self.lif2(cur2, mem2)
-            spk_rec.append(spk2)
-
-        return torch.stack(spk_rec)
+mem = lif.init_leaky()  # Membranpotential auf 0
+for t in range(timesteps):
+    spk, mem = lif(input[t], mem)
+    # spk ist 0 oder 1
 ```
 
-### LIF dynamics
+**Meine Erfahrung mit beta:**
+- `0.9` – guter Startpunkt
+- Zu hoch (0.99) → Neuron "merkt sich" zu viel, reagiert träge
+- Zu niedrig (0.5) → Neuron vergisst zu schnell, braucht konstanten Input
 
-The membrane potential follows:
+## Event-Kamera Daten
 
-`U[t+1] = beta * U[t] + I[t] - spike[t] * threshold`
-
-- **beta** controls the leak (0.9 = slow leak, 0.5 = fast leak)
-- **I[t]** is the input current at time t
-- When U crosses the threshold, a spike is emitted and U resets
-
-### Event cameras
-
-DVS (Dynamic Vision Sensors) only record changes in light intensity, producing sparse event streams. Each event is a tuple: `(x, y, timestamp, polarity)`. Perfect input for SNNs.
+DVS gibt Events als `(x, y, t, polarity)`. Muss in was umgewandelt werden das ins Netzwerk passt.
 
 ```python
 from tonic import datasets, transforms
 
+# Events zu Frames akkumulieren
 transform = transforms.Compose([
-    transforms.Denoise(filter_time=10000),
-    transforms.ToFrame(sensor_size=(128, 128, 2), time_window=25000)
+    transforms.Denoise(filter_time=10000),  # Rauschen raus
+    transforms.ToFrame(
+        sensor_size=(128, 128, 2),  # 2 = ON/OFF channels
+        time_window=25000  # 25ms pro Frame
+    )
 ])
 
-dataset = datasets.DVSGesture(
-    save_to='./data',
-    train=True,
-    transform=transform
-)
+dataset = datasets.DVSGesture(save_to='./data', transform=transform)
 ```
 
-### Training SNNs
+**Achtung:** `time_window` ist kritisch.
+- Zu kurz → zu wenig Events pro Frame
+- Zu lang → Motion Blur Effekt
 
-Spikes are binary (0 or 1), so gradients don't flow through them normally. Solution: surrogate gradients - pretend the spike function has a smooth gradient during backprop.
+Ich nehm meistens 20-50ms, hängt von der Bewegungsgeschwindigkeit ab.
+
+## Training
+
+Spikes sind binär → kein Gradient. Lösung: Surrogate Gradients (tun so als wäre die Spike-Funktion differenzierbar).
+
+snnTorch macht das automatisch, aber gut zu wissen:
 
 ```python
-# snnTorch handles this automatically
-# Loss is usually computed on spike counts
-loss = nn.CrossEntropyLoss()(spk_rec.sum(0), labels)
+# Loss auf Spike-Counts
+output_spikes = torch.stack(spk_rec)  # (timesteps, batch, classes)
+loss = nn.CrossEntropyLoss()(output_spikes.sum(0), labels)
+
+# Alternativ: Loss auf Membrane Potential am Ende
+# loss = nn.CrossEntropyLoss()(mem_rec[-1], labels)
 ```
 
-### Key parameters
+Spike-Count-Loss funktioniert bei mir meistens besser.
 
-| Parameter | Notes |
-|-----------|-------|
-| beta (decay) | 0.9 is a good start. Lower = faster response |
-| threshold | Usually 1.0. Higher = fewer spikes |
-| timesteps | More = better temporal resolution, slower training |
+## Hardware
 
-### Neuromorphic hardware
+- **Intel Loihi** – der "echte" neuromorphe Chip, schwer ranzukommen
+- **BrainChip Akida** – kommerziell verfügbar
+- **GPU mit snnTorch** – für Forschung/Prototyping reicht das
 
-- **Intel Loihi** - Research chip, 128 cores
-- **IBM TrueNorth** - 1 million neurons on a chip
-- **BrainChip Akida** - Available commercially
+Hab noch nicht auf echter Hardware deployed, nur simuliert.
 
-### Resources
+## Probleme die ich hatte
 
-- [snnTorch Documentation](https://snntorch.readthedocs.io/)
-- [Tonic](https://tonic.readthedocs.io/) - Event data preprocessing
-- [Surrogate Gradient Learning in SNNs](https://arxiv.org/abs/1809.05793)
+1. **Zu wenig Spikes:** Netzwerk lernt "einfach nie feuern" → Threshold runter oder Input skalieren
+2. **Zu viele Spikes:** Alles feuert immer → Threshold hoch oder Regularisierung
+3. **Vanishing Spikes:** In tiefen Netzen kommen hinten keine Spikes an → Residual Connections helfen
+
+---
+
+## Links
+
+- [snnTorch Tutorials](https://snntorch.readthedocs.io/en/latest/tutorials/index.html) – sehr gut
+- [Tonic](https://tonic.readthedocs.io/) – Event-Daten preprocessing
+- [Surrogate Gradient Paper](https://arxiv.org/abs/1901.09948)
+
+---
+
+Verwandt: [Gesture Recognition Projekt](/projekte/neuroai-snn-gesture-recognition/)

@@ -4,244 +4,95 @@ title: Streamlit
 permalink: /notizen/streamlit/
 ---
 
-<p class="pill">Notes · Python · Dashboards</p>
+# Streamlit
 
-Streamlit turns Python scripts into web apps. No frontend knowledge needed.
+Python-Script wird Web-App. Kein HTML/CSS nötig.
 
-### Why Streamlit?
+Stand: Januar 2025
 
-- Write only Python, no HTML/CSS/JS
-- Hot reload during development
-- Built-in widgets for user input
-- Easy to deploy
-- Great for data apps and ML demos
+---
 
-### Installation
-
-```bash
-pip install streamlit
-```
-
-### Hello World
-
-Create `app.py`:
+## Hello World
 
 ```python
 import streamlit as st
 
-st.title("Hello Streamlit")
-st.write("This is my first app!")
-
-name = st.text_input("What's your name?")
+st.title("Meine App")
+name = st.text_input("Name?")
 if name:
-    st.write(f"Hello, {name}!")
+    st.write(f"Hi {name}!")
 ```
-
-Run it:
 
 ```bash
 streamlit run app.py
 ```
 
----
-
-## Input widgets
+## Widgets die ich oft brauche
 
 ```python
-import streamlit as st
-
-# Text
-name = st.text_input("Name")
-bio = st.text_area("Bio")
-
-# Numbers
-age = st.number_input("Age", min_value=0, max_value=120)
-rating = st.slider("Rating", 1, 10, 5)
-
-# Selection
-option = st.selectbox("Choose one", ["A", "B", "C"])
-options = st.multiselect("Choose many", ["X", "Y", "Z"])
-
-# Boolean
-agree = st.checkbox("I agree")
-on = st.toggle("Enable feature")
-
-# Date/Time
-date = st.date_input("Date")
-time = st.time_input("Time")
-
-# File upload
-file = st.file_uploader("Upload a file", type=["csv", "txt"])
+# Input
+text = st.text_input("Label")
+number = st.slider("Wert", 0, 100, 50)
+option = st.selectbox("Auswahl", ["A", "B", "C"])
+file = st.file_uploader("CSV hochladen", type="csv")
 
 # Button
-if st.button("Submit"):
-    st.write("Submitted!")
+if st.button("Los"):
+    st.write("Clicked!")
+
+# DataFrame anzeigen
+st.dataframe(df)
+
+# Plot
+st.line_chart(data)
 ```
-
----
-
-## Displaying data
-
-```python
-import streamlit as st
-import pandas as pd
-import numpy as np
-
-# DataFrames
-df = pd.DataFrame({
-    'name': ['Alice', 'Bob', 'Charlie'],
-    'age': [25, 30, 35]
-})
-
-st.dataframe(df)  # Interactive table
-st.table(df)      # Static table
-
-# Metrics
-st.metric("Temperature", "70°F", delta="2°F")
-
-# JSON
-st.json({"key": "value", "list": [1, 2, 3]})
-
-# Code
-st.code("print('hello')", language="python")
-```
-
-### Charts
-
-```python
-import streamlit as st
-import pandas as pd
-import numpy as np
-
-# Built-in charts
-chart_data = pd.DataFrame(
-    np.random.randn(20, 3),
-    columns=['a', 'b', 'c']
-)
-
-st.line_chart(chart_data)
-st.area_chart(chart_data)
-st.bar_chart(chart_data)
-
-# Matplotlib
-import matplotlib.pyplot as plt
-
-fig, ax = plt.subplots()
-ax.plot([1, 2, 3], [4, 5, 6])
-st.pyplot(fig)
-
-# Plotly
-import plotly.express as px
-
-fig = px.scatter(df, x='x', y='y', color='category')
-st.plotly_chart(fig)
-```
-
----
 
 ## Layout
 
 ```python
-import streamlit as st
-
-# Columns
+# Zwei Spalten
 col1, col2 = st.columns(2)
 with col1:
-    st.write("Left column")
+    st.write("Links")
 with col2:
-    st.write("Right column")
-
-# Tabs
-tab1, tab2 = st.tabs(["Tab 1", "Tab 2"])
-with tab1:
-    st.write("Content of tab 1")
-with tab2:
-    st.write("Content of tab 2")
+    st.write("Rechts")
 
 # Sidebar
 with st.sidebar:
-    st.title("Sidebar")
-    option = st.selectbox("Select", ["A", "B"])
-
-# Expander
-with st.expander("Click to expand"):
-    st.write("Hidden content")
-
-# Container
-with st.container():
-    st.write("Grouped content")
+    option = st.selectbox("Menu", ["A", "B"])
 ```
 
----
+## Session State
 
-## State management
-
-Streamlit reruns the script on every interaction. Use `st.session_state` to persist data.
+Streamlit läuft bei jeder Interaktion neu. State speichern:
 
 ```python
-import streamlit as st
-
-# Initialize state
 if 'count' not in st.session_state:
     st.session_state.count = 0
 
-# Update state
-if st.button("Increment"):
+if st.button("Plus"):
     st.session_state.count += 1
 
-st.write(f"Count: {st.session_state.count}")
-
-# Form (batches inputs)
-with st.form("my_form"):
-    name = st.text_input("Name")
-    age = st.number_input("Age")
-    submitted = st.form_submit_button("Submit")
-
-    if submitted:
-        st.write(f"Hello {name}, age {age}")
+st.write(st.session_state.count)
 ```
-
----
 
 ## Caching
 
-Avoid recomputing expensive functions:
-
 ```python
-import streamlit as st
-
 @st.cache_data
-def load_data(url):
-    return pd.read_csv(url)
-
-@st.cache_resource
-def load_model():
-    return SomeHeavyModel()
-
-df = load_data("data.csv")  # Only runs once
-model = load_model()
+def load_data(path):
+    return pd.read_csv(path)  # läuft nur einmal
 ```
 
-### Deployment
+## Wann Streamlit, wann was anderes
 
-```bash
-# Streamlit Community Cloud (free)
-# 1. Push to GitHub
-# 2. Go to share.streamlit.io
-# 3. Connect repo
+- Streamlit: Schnelle Demos, ML-Prototypen, interne Tools
+- Gradio: Wenn's nur um ein ML-Model geht
+- Flask/FastAPI: Wenn mehr Kontrolle nötig
 
-# Or use Docker
-FROM python:3.11-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-COPY . .
-EXPOSE 8501
-CMD ["streamlit", "run", "app.py"]
-```
+---
 
-### Resources
+## Links
 
 - [Streamlit Docs](https://docs.streamlit.io/)
-- [Streamlit Gallery](https://streamlit.io/gallery)
 - [Cheat Sheet](https://docs.streamlit.io/library/cheatsheet)

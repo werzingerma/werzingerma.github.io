@@ -4,105 +4,63 @@ title: Docker
 permalink: /notizen/docker/
 ---
 
-<p class="pill">Notes · Containers · DevOps</p>
+# Docker
 
-Notes on Docker for containerizing applications.
+Container-Basics und Snippets.
 
-### Basic concepts
+---
 
-- **Image**: A template for creating containers (like a class)
-- **Container**: A running instance of an image (like an object)
-- **Dockerfile**: Instructions for building an image
-- **Volume**: Persistent storage that survives container restarts
-- **Network**: How containers communicate
-
-### Common commands
+## Commands die ich immer brauche
 
 ```bash
-# Run a container
-docker run -it ubuntu bash
+# Container starten
+docker run -it ubuntu bash              # interaktiv
+docker run -d -p 8080:80 nginx          # detached mit Port
 
-# Run detached with port mapping
-docker run -d -p 8080:80 nginx
+# Was läuft?
+docker ps                                # running
+docker ps -a                             # alle
 
-# List running containers
-docker ps
+# Logs
+docker logs -f <container>               # follow
 
-# List all containers (including stopped)
-docker ps -a
+# Rein in laufenden Container
+docker exec -it <container> bash
 
-# Stop a container
-docker stop <container-id>
-
-# Remove a container
-docker rm <container-id>
-
-# List images
-docker images
-
-# Remove an image
-docker rmi <image-id>
-
-# Shell into running container
-docker exec -it <container-id> bash
-
-# View logs
-docker logs -f <container-id>
-
-# Clean up everything
-docker system prune -a
+# Aufräumen
+docker system prune -a                   # ALLES weg was nicht läuft
 ```
 
-### Dockerfile
+## Dockerfile (Python)
 
-Basic structure for a Python project:
+Meine Standard-Vorlage:
 
 ```dockerfile
-# Base image
 FROM python:3.11-slim
 
-# Set working directory
 WORKDIR /app
 
-# Install dependencies first (better caching)
+# Dependencies zuerst (besseres Caching)
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application code
 COPY . .
 
-# Expose port
 EXPOSE 8000
-
-# Run command
 CMD ["python", "main.py"]
 ```
 
-### Build and run
+**Tipps:**
+- `--no-cache-dir` → kleineres Image
+- `slim` statt `alpine` für Python → weniger Probleme mit compiled packages
+- Dependencies VOR Code kopieren → Cache wird nicht invalidiert wenn nur Code sich ändert
 
-```bash
-# Build image
-docker build -t my-app .
+## Multi-Stage Build
 
-# Build with specific Dockerfile
-docker build -f Dockerfile.dev -t my-app:dev .
-
-# Run container
-docker run -p 8000:8000 my-app
-
-# Run with environment variables
-docker run -e DATABASE_URL=postgres://... my-app
-
-# Run with volume mount (for development)
-docker run -v $(pwd):/app my-app
-```
-
-### Multi-stage builds
-
-Keep images small by separating build and runtime:
+Für Production Images:
 
 ```dockerfile
-# Build stage
+# Build
 FROM node:18 AS builder
 WORKDIR /app
 COPY package*.json ./
@@ -110,31 +68,26 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-# Production stage
+# Run
 FROM nginx:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
 ```
+
+Ergebnis: Nur nginx + static files, kein Node.
 
 ---
 
 ## Docker Compose
 
-Define and run multi-container applications.
-
-### docker-compose.yml
-
 ```yaml
+# docker-compose.yml
 services:
   app:
     build: .
     ports:
       - "8000:8000"
     volumes:
-      - .:/app
-    environment:
-      - DATABASE_URL=postgres://db:5432/mydb
+      - .:/app           # für Development: live reload
     depends_on:
       - db
 
@@ -142,94 +95,37 @@ services:
     image: postgres:15
     environment:
       POSTGRES_DB: mydb
-      POSTGRES_USER: user
       POSTGRES_PASSWORD: secret
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-
-  redis:
-    image: redis:7-alpine
-    ports:
-      - "6379:6379"
+      - pgdata:/var/lib/postgresql/data
 
 volumes:
-  postgres_data:
-```
-
-### Compose commands
-
-```bash
-# Start all services
-docker compose up
-
-# Start in background
-docker compose up -d
-
-# Rebuild images
-docker compose up --build
-
-# Stop services
-docker compose down
-
-# Stop and remove volumes
-docker compose down -v
-
-# View logs
-docker compose logs -f
-
-# Run command in service
-docker compose exec app bash
-```
-
-### Development vs Production
-
-```yaml
-# docker-compose.yml (base)
-services:
-  app:
-    build: .
-
-# docker-compose.override.yml (dev - auto-loaded)
-services:
-  app:
-    volumes:
-      - .:/app
-    environment:
-      - DEBUG=true
-
-# docker-compose.prod.yml
-services:
-  app:
-    environment:
-      - DEBUG=false
+  pgdata:
 ```
 
 ```bash
-# Development (uses override automatically)
-docker compose up
-
-# Production
-docker compose -f docker-compose.yml -f docker-compose.prod.yml up
+docker compose up -d      # starten
+docker compose down       # stoppen
+docker compose logs -f    # logs
+docker compose exec app bash  # shell
 ```
 
 ---
 
-### .dockerignore
+## .dockerignore
+
+Nicht vergessen:
 
 ```
 node_modules
 __pycache__
-*.pyc
 .git
 .env
-.venv
-dist
-build
 *.log
 ```
 
-### Resources
+---
+
+## Links
 
 - [Docker Docs](https://docs.docker.com/)
-- [Dockerfile Best Practices](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
-- [Docker Compose Docs](https://docs.docker.com/compose/)

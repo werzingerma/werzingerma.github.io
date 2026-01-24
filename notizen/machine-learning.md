@@ -4,89 +4,90 @@ title: Machine Learning
 permalink: /notizen/machine-learning/
 ---
 
-<p class="pill">Notes · ML · Deep Learning</p>
+# Machine Learning
 
-Notes on neural networks, training techniques, and architectures.
+PyTorch-Snippets und Notizen die ich regelmäßig brauche.
 
-### The basics
+Stand: Januar 2025
 
-A neural network is a function that maps inputs to outputs through layers of learned transformations. Each layer does: `output = activation(weights @ input + bias)`. Training adjusts the weights to minimize a loss function using gradient descent.
+---
 
-### Simple neural network in PyTorch
+## Training Loop (meine Standard-Vorlage)
 
 ```python
-import torch
-import torch.nn as nn
-
-class SimpleNet(nn.Module):
-    def __init__(self, input_size, hidden_size, output_size):
-        super().__init__()
-        self.layers = nn.Sequential(
-            nn.Linear(input_size, hidden_size),
-            nn.ReLU(),
-            nn.Linear(hidden_size, output_size)
-        )
-
-    def forward(self, x):
-        return self.layers(x)
-
-# Training loop
-model = SimpleNet(784, 128, 10)
-optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+model = MyModel()
+optimizer = torch.optim.AdamW(model.parameters(), lr=3e-4)  # AdamW > Adam
 loss_fn = nn.CrossEntropyLoss()
 
 for epoch in range(epochs):
-    for batch_x, batch_y in dataloader:
+    model.train()
+    for batch in train_loader:
         optimizer.zero_grad()
-        pred = model(batch_x)
-        loss = loss_fn(pred, batch_y)
+        loss = loss_fn(model(batch.x), batch.y)
         loss.backward()
+        torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)  # hilft bei Transformers
         optimizer.step()
+
+    # Validation
+    model.eval()
+    with torch.no_grad():
+        val_loss = ...
 ```
 
-### Activation functions
+## Aktivierungsfunktionen
 
-| Function | Use case |
-|----------|----------|
-| ReLU | Default for hidden layers |
-| Sigmoid | Binary classification output (0-1) |
-| Softmax | Multi-class output (sum to 1) |
-| Tanh | Sometimes better for RNNs |
-| GELU | Transformers, smoother than ReLU |
+| Funktion | Wann |
+|----------|------|
+| ReLU | Default, außer bei Transformers |
+| GELU | Transformers (smoother) |
+| Sigmoid | Binary Output (0-1) |
+| Softmax | Multi-Class Output |
 
-### Common architectures
+Tanh brauch ich eigentlich nie mehr.
 
-| Architecture | Use case |
-|-------------|----------|
-| MLP | Fully connected layers, tabular data |
-| CNN | Convolutional layers, images, spatial data |
-| RNN/LSTM | Sequential data (mostly replaced by transformers) |
-| Transformer | Attention-based, state of the art for everything |
+## Hyperparameter die ich immer zuerst probiere
 
-### Transformers - the key insight
+- **Learning Rate:** `3e-4` (Adam/AdamW)
+- **Batch Size:** So groß wie in GPU passt
+- **Optimizer:** AdamW mit weight_decay=0.01
 
-The attention mechanism lets the model look at all positions in the input and decide which ones matter for each output:
+Wenn Loss NaN → LR zu hoch.
+
+## Attention (für mich selbst)
 
 ```python
-# Scaled dot-product attention
+# Immer wieder vergessen wie die Dimensionen gehen
 def attention(Q, K, V):
+    # Q, K, V: (batch, seq_len, d_model)
     d_k = Q.size(-1)
-    scores = torch.matmul(Q, K.transpose(-2, -1)) / math.sqrt(d_k)
+    scores = Q @ K.transpose(-2, -1) / math.sqrt(d_k)
     weights = F.softmax(scores, dim=-1)
-    return torch.matmul(weights, V)
+    return weights @ V
 ```
 
-### Training tips
+## Debugging-Tipps
 
-- Start with a small model and overfit on a tiny dataset first
-- Learning rate is the most important hyperparameter - try 3e-4
-- Batch normalization or layer normalization usually helps
-- Data augmentation is often more effective than a bigger model
-- If loss is NaN, learning rate is probably too high
+1. **Erstmal auf Mini-Dataset overfitten** – wenn das nicht klappt, stimmt was am Code nicht
+2. **Shapes printen** – `print(x.shape)` ist dein Freund
+3. **Gradient-Check:** Sind die Gradienten 0? Dann fließt nix.
 
-### Resources
+```python
+for name, param in model.named_parameters():
+    if param.grad is not None:
+        print(f"{name}: {param.grad.abs().mean():.6f}")
+```
 
-- [3Blue1Brown - Neural Networks](https://www.youtube.com/watch?v=aircAruvnKk) - Best visual explanation
-- [Karpathy's Training Recipe](https://karpathy.github.io/2019/04/25/recipe/)
-- [PyTorch Tutorials](https://pytorch.org/tutorials/)
-- [Karpathy - Let's build GPT](https://www.youtube.com/watch?v=kCc8FmEb1nY)
+---
+
+## TODO
+
+- [ ] Mixed Precision Training Notizen
+- [ ] LoRA/QLoRA für Fine-Tuning
+
+---
+
+## Links
+
+- [Karpathy's Training Recipe](https://karpathy.github.io/2019/04/25/recipe/) – Pflichtlektüre
+- [Let's build GPT](https://www.youtube.com/watch?v=kCc8FmEb1nY) – bestes Transformer-Tutorial
+- [PyTorch Docs](https://pytorch.org/docs/)

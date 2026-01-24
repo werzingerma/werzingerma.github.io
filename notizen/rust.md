@@ -4,226 +4,95 @@ title: Rust
 permalink: /notizen/rust/
 ---
 
-<p class="pill">Notes · Systems · Memory Safety</p>
+# Rust
 
-Rust is a systems programming language focused on safety and performance. No garbage collector, no null, no data races.
+Lerne ich gerade. Memory safety ohne Garbage Collector, aber der Compiler ist streng.
 
-### Why Rust?
+Stand: Januar 2025
 
-- Memory safety without garbage collection
-- Zero-cost abstractions
-- Compiler catches bugs at compile time
-- Great tooling (cargo, rustfmt, clippy)
+---
+
+## Das hab ich verstanden
 
 ### Ownership
 
-Every value has exactly one owner. When the owner goes out of scope, the value is dropped.
+Jeder Wert hat genau einen Owner. Geht der aus dem Scope, wird der Wert gedroppt.
 
 ```rust
-fn main() {
-    let s1 = String::from("hello");  // s1 owns the string
-    let s2 = s1;                      // ownership moves to s2
-    // println!("{}", s1);            // ERROR: s1 no longer valid
-
-    let s3 = s2.clone();              // explicit copy
-    println!("{} {}", s2, s3);        // both valid
-}
+let s1 = String::from("hello");
+let s2 = s1;        // s1 ist jetzt ungültig!
+// println!("{}", s1);  // Compiler-Fehler
 ```
 
 ### Borrowing
 
-References let you use values without taking ownership.
+Referenzen um Werte zu nutzen ohne Ownership zu übernehmen.
 
 ```rust
-fn main() {
-    let s = String::from("hello");
-
-    // Immutable borrow - can have multiple
-    let len = calculate_length(&s);
-    println!("{} has length {}", s, len);
-
-    // Mutable borrow - only one at a time
-    let mut s2 = String::from("hello");
-    change(&mut s2);
-}
-
-fn calculate_length(s: &String) -> usize {
+fn len(s: &String) -> usize {  // immutable borrow
     s.len()
 }
 
-fn change(s: &mut String) {
+fn append(s: &mut String) {    // mutable borrow
     s.push_str(" world");
 }
 ```
 
-### Structs and impl
+Regel: Entweder viele immutable ODER ein mutable Borrow. Nicht beides.
+
+### Error Handling
+
+Kein try/catch. `Result` für Fehler, `Option` für "kann leer sein".
 
 ```rust
-struct User {
-    name: String,
-    email: String,
-    active: bool,
-}
-
-impl User {
-    // Constructor
-    fn new(name: String, email: String) -> Self {
-        Self {
-            name,
-            email,
-            active: true,
-        }
-    }
-
-    // Method
-    fn greeting(&self) -> String {
-        format!("Hello, {}!", self.name)
-    }
-
-    // Mutable method
-    fn deactivate(&mut self) {
-        self.active = false;
-    }
-}
-```
-
----
-
-## Error handling
-
-No exceptions. Use `Result` for recoverable errors, `panic!` for unrecoverable.
-
-```rust
-use std::fs::File;
-use std::io::{self, Read};
-
 fn read_file(path: &str) -> Result<String, io::Error> {
-    let mut file = File::open(path)?;  // ? propagates error
-    let mut contents = String::new();
-    file.read_to_string(&mut contents)?;
-    Ok(contents)
+    let mut file = File::open(path)?;  // ? propagiert Fehler
+    let mut s = String::new();
+    file.read_to_string(&mut s)?;
+    Ok(s)
 }
 
-fn main() {
-    match read_file("config.txt") {
-        Ok(contents) => println!("{}", contents),
-        Err(e) => eprintln!("Error: {}", e),
-    }
-
-    // Or with unwrap (panics on error)
-    let contents = read_file("config.txt").unwrap();
-
-    // Or with expect (panics with message)
-    let contents = read_file("config.txt")
-        .expect("Failed to read config");
+match read_file("config.txt") {
+    Ok(content) => println!("{}", content),
+    Err(e) => eprintln!("Error: {}", e),
 }
 ```
 
-### Option for nullable values
-
-```rust
-fn find_user(id: u32) -> Option<String> {
-    if id == 1 {
-        Some(String::from("Max"))
-    } else {
-        None
-    }
-}
-
-fn main() {
-    // Pattern matching
-    match find_user(1) {
-        Some(name) => println!("Found: {}", name),
-        None => println!("Not found"),
-    }
-
-    // Or with if let
-    if let Some(name) = find_user(1) {
-        println!("Found: {}", name);
-    }
-
-    // Or with unwrap_or
-    let name = find_user(1).unwrap_or_else(|| String::from("Anonymous"));
-}
-```
-
----
-
-## Common patterns
-
-### Iterators
-
-```rust
-let numbers = vec![1, 2, 3, 4, 5];
-
-// Map and collect
-let doubled: Vec<i32> = numbers.iter().map(|x| x * 2).collect();
-
-// Filter
-let evens: Vec<&i32> = numbers.iter().filter(|x| *x % 2 == 0).collect();
-
-// Fold (reduce)
-let sum: i32 = numbers.iter().fold(0, |acc, x| acc + x);
-
-// Chaining
-let result: i32 = numbers
-    .iter()
-    .filter(|x| *x % 2 == 0)
-    .map(|x| x * 2)
-    .sum();
-```
-
-### Enums
-
-```rust
-enum Message {
-    Quit,
-    Move { x: i32, y: i32 },
-    Write(String),
-    ChangeColor(u8, u8, u8),
-}
-
-fn handle_message(msg: Message) {
-    match msg {
-        Message::Quit => println!("Quit"),
-        Message::Move { x, y } => println!("Move to {}, {}", x, y),
-        Message::Write(text) => println!("Write: {}", text),
-        Message::ChangeColor(r, g, b) => println!("Color: {}, {}, {}", r, g, b),
-    }
-}
-```
-
----
-
-## Cargo commands
+## Cargo Commands
 
 ```bash
-cargo new my-project      # Create new project
-cargo build               # Compile
-cargo build --release     # Compile optimized
-cargo run                 # Build and run
-cargo test                # Run tests
-cargo check               # Fast syntax check
-cargo clippy              # Linter
-cargo fmt                 # Format code
-cargo add serde           # Add dependency
-cargo doc --open          # Generate and open docs
+cargo new projekt     # Neues Projekt
+cargo run             # Kompilieren und starten
+cargo build --release # Optimiert kompilieren
+cargo test            # Tests laufen lassen
+cargo clippy          # Linter
 ```
 
-### Useful crates
+---
 
-| Crate | Purpose |
-|-------|---------|
-| serde | Serialization (JSON, etc.) |
-| tokio | Async runtime |
-| reqwest | HTTP client |
-| clap | CLI argument parsing |
-| anyhow | Easy error handling |
-| thiserror | Custom error types |
+## Das versteh ich noch nicht ganz
 
-### Resources
+- [ ] Lifetimes (`'a`) – wann brauch ich die explizit?
+- [ ] Traits – wie Interfaces, aber wann `impl Trait` vs `dyn Trait`?
+- [ ] Async/Await – tokio vs async-std?
+- [ ] Smart Pointers – `Box`, `Rc`, `Arc`, `RefCell` – wann was?
+
+## Was mich nervt
+
+- Compile-Zeiten sind lang
+- Manchmal kämpft man mehr mit dem Borrow Checker als mit dem Problem
+- Viele Wege zum gleichen Ziel (`.iter()`, `.into_iter()`, `&vec`, ...)
+
+## Was cool ist
+
+- Wenn's kompiliert, läuft's meistens
+- `cargo` ist besser als npm/pip/etc.
+- Pattern Matching ist super
+
+---
+
+## Links
 
 - [The Rust Book](https://doc.rust-lang.org/book/)
-- [Rust by Example](https://doc.rust-lang.org/rust-by-example/)
-- [Rustlings](https://rust-lang.github.io/rustlings/)
+- [Rustlings](https://rust-lang.github.io/rustlings/) – Übungen
 - [Rust Cheat Sheet](https://cheats.rs/)
