@@ -21,7 +21,6 @@ permalink: /projects/
             <span class="tree">├── </span>
             <a href="/projects/snn-gesture/">snn-gesture</a>
             <span class="comment"># event-camera gestures</span>
-            <span class="star">★</span>
             <span class="tech">pytorch</span>
           </li>
           <li>
@@ -62,15 +61,6 @@ permalink: /projects/
             <span class="tech">js</span>
           </li>
         </ul>
-      </div>
-
-      <!-- Footer -->
-      <div class="terminal-footer">
-        <span class="dir-header">$ cat README.md</span>
-        <div class="readme-content">
-          <p><span class="star">★</span> = main focus (neuromorphic computing)</p>
-          <p>all repos: <a href="https://github.com/werzingerma">github.com/werzingerma</a></p>
-        </div>
       </div>
 
     </div>
@@ -196,36 +186,6 @@ permalink: /projects/
   font-size: 0.75rem;
   margin-left: auto;
   padding-left: 1rem;
-}
-
-/* Special Markers */
-.star {
-  color: #ebcb8b;
-  margin-left: 0.5rem;
-}
-
-/* Terminal Footer */
-.terminal-footer {
-  margin-top: 1.5rem;
-  padding-top: 1rem;
-  border-top: 1px solid #4c566a;
-}
-
-.terminal-footer .dir-header {
-  margin-bottom: 0.5rem;
-}
-
-.readme-content {
-  padding-left: 1rem;
-  color: #616e88;
-}
-
-.readme-content p {
-  margin: 0.25rem 0;
-}
-
-.readme-content a {
-  min-width: auto;
 }
 
 /* Mobile */

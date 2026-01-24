@@ -82,7 +82,6 @@ permalink: /notes/
             <span class="tree">├── </span>
             <a href="/notes/snn/">snn</a>
             <span class="comment"># neuromorphic computing</span>
-            <span class="star">★</span>
           </li>
           <li>
             <span class="tree">├── </span>
@@ -222,12 +221,6 @@ permalink: /notes/
 /* Comments */
 .comment {
   color: #616e88;
-  margin-left: 0.5rem;
-}
-
-/* Special Markers */
-.star {
-  color: #ebcb8b;
   margin-left: 0.5rem;
 }
 
