@@ -17,9 +17,8 @@ plugins:
 # Navigation im Header
 header_pages:
   - index.md
-  - projekte/index.md
-  - music-attributions.md
-  - notizen/index.md
+  - projects/index.md
+  - notes/index.md
 
 # Permalink-Struktur
 permalink: /:categories/:title/

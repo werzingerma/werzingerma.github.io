@@ -1,0 +1,250 @@
+---
+layout: page
+title: Projects
+permalink: /projects/
+---
+
+<main class="terminal">
+  <h1>Projects</h1>
+
+  <div class="terminal-window">
+    <div class="terminal-header">
+      <span class="terminal-prompt">$ ls ~/projects</span>
+    </div>
+
+    <div class="terminal-content">
+      <!-- University -->
+      <div class="directory">
+        <span class="dir-header">drwxr-xr-x  university/</span>
+        <ul>
+          <li>
+            <span class="tree">├── </span>
+            <a href="/projects/snn-gesture/">snn-gesture</a>
+            <span class="comment"># event-camera gestures</span>
+            <span class="star">★</span>
+            <span class="tech">pytorch</span>
+          </li>
+          <li>
+            <span class="tree">├── </span>
+            <a href="/projects/pii-detection/">pii-detection</a>
+            <span class="comment"># llm privacy pipeline</span>
+            <span class="tech">python</span>
+          </li>
+          <li>
+            <span class="tree">└── </span>
+            <a href="/projects/quarto-workflow/">quarto-workflow</a>
+            <span class="comment"># jupyter → paper</span>
+            <span class="tech">quarto</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Side Projects -->
+      <div class="directory">
+        <span class="dir-header">drwxr-xr-x  side-projects/</span>
+        <ul>
+          <li>
+            <span class="tree">├── </span>
+            <a href="/projects/insightify/">insightify</a>
+            <span class="comment"># dataset cli</span>
+            <span class="tech">python</span>
+          </li>
+          <li>
+            <span class="tree">├── </span>
+            <a href="/projects/readmeo/">readmeo</a>
+            <span class="comment"># github readme builder</span>
+            <span class="tech">svelte, tauri</span>
+          </li>
+          <li>
+            <span class="tree">└── </span>
+            <a href="/projects/pocket-arcade/">pocket-arcade</a>
+            <span class="comment"># retro games pwa</span>
+            <span class="tech">js</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Footer -->
+      <div class="terminal-footer">
+        <span class="dir-header">$ cat README.md</span>
+        <div class="readme-content">
+          <p><span class="star">★</span> = main focus (neuromorphic computing)</p>
+          <p>all repos: <a href="https://github.com/werzingerma">github.com/werzingerma</a></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<style>
+/* Terminal Container */
+.terminal {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.terminal h1 {
+  font-family: inherit;
+  margin-bottom: 1.5rem;
+}
+
+/* Terminal Window - Nord Theme */
+.terminal-window {
+  background: #2e3440;
+  border: 1px solid #4c566a;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.terminal-header {
+  background: #3b4252;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #4c566a;
+}
+
+.terminal-prompt {
+  font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace;
+  font-size: 0.9rem;
+  color: #a3be8c;
+}
+
+.terminal-prompt::after {
+  content: '▋';
+  animation: blink 1s step-end infinite;
+  margin-left: 0.5rem;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.terminal-content {
+  padding: 1rem 1.25rem;
+  font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace;
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+
+/* Directories */
+.directory {
+  margin-bottom: 1.25rem;
+}
+
+.directory:last-child {
+  margin-bottom: 0;
+}
+
+.dir-header {
+  color: #d8dee9;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.directory ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  padding-left: 1rem;
+}
+
+.directory li {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0;
+}
+
+.directory li:hover {
+  background: rgba(136, 192, 208, 0.1);
+  margin-left: -0.5rem;
+  padding-left: 0.5rem;
+  margin-right: -0.5rem;
+  padding-right: 0.5rem;
+}
+
+/* Tree Characters */
+.tree {
+  color: #4c566a;
+  user-select: none;
+}
+
+/* Links */
+.terminal-content a {
+  color: #88c0d0;
+  text-decoration: none;
+  min-width: 140px;
+  display: inline-block;
+}
+
+.terminal-content a:hover {
+  color: #8fbcbb;
+  text-decoration: underline;
+}
+
+/* Comments */
+.comment {
+  color: #616e88;
+  margin-left: 0.5rem;
+  flex: 1;
+}
+
+/* Tech Tags */
+.tech {
+  color: #4c566a;
+  font-size: 0.75rem;
+  margin-left: auto;
+  padding-left: 1rem;
+}
+
+/* Special Markers */
+.star {
+  color: #ebcb8b;
+  margin-left: 0.5rem;
+}
+
+/* Terminal Footer */
+.terminal-footer {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #4c566a;
+}
+
+.terminal-footer .dir-header {
+  margin-bottom: 0.5rem;
+}
+
+.readme-content {
+  padding-left: 1rem;
+  color: #616e88;
+}
+
+.readme-content p {
+  margin: 0.25rem 0;
+}
+
+.readme-content a {
+  min-width: auto;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .terminal-content {
+    font-size: 0.75rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .terminal-content a {
+    min-width: 100px;
+  }
+
+  .comment {
+    display: none;
+  }
+
+  .tech {
+    display: none;
+  }
+}
+</style>
