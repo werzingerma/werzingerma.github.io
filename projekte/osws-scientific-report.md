@@ -6,32 +6,110 @@ permalink: /projekte/osws-scientific-report/
 
 # quarto workflow
 
-Automatisierte Pipeline: Jupyter Notebook → Quarto → PDF/HTML Paper
+Jupyter Notebook schreiben → GitHub pushen → automatisch als PDF/HTML Paper.
 
-## warum
+Entstanden weil manuelles Exportieren nervt und ich LaTeX-Boilerplate hasse.
 
-Notebook schreiben, manuell exportieren, Formatierung anpassen, nochmal exportieren... Nervig. Also hab ich das automatisiert.
+## wie es funktioniert
 
-## pipeline
+```
+┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
+│  Jupyter        │     │  GitHub         │     │  GitHub Pages   │
+│  Notebook       │ ──▶ │  Actions        │ ──▶ │  (HTML/PDF)     │
+│  (.ipynb)       │     │  + Quarto       │     │                 │
+└─────────────────┘     └─────────────────┘     └─────────────────┘
+```
 
-1. Notebook schreiben (Code + Text zusammen)
-2. Referenzen via BibTeX / Zotero
-3. Push zu GitHub
-4. GitHub Actions rendert alles automatisch
-5. Output landet auf GitHub Pages
+## setup
 
-## was geht
+`_quarto.yml`:
 
-- Output: HTML, PDF, LaTeX, Word
-- Journal-Templates (Springer, Elsevier, Nature, Lancet)
-- Citations mit verschiedenen Styles
-- Automatisches Deployment
+```yaml
+project:
+  type: manuscript
+
+format:
+  html:
+    toc: true
+    theme: cosmo
+  pdf:
+    documentclass: scrartcl
+    papersize: a4
+
+execute:
+  echo: false    # Code nicht im Output zeigen
+  warning: false
+
+bibliography: references.bib
+csl: apa.csl
+```
+
+GitHub Action (`.github/workflows/publish.yml`):
+
+```yaml
+name: Render and Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Install TinyTeX
+        run: quarto install tinytex
+
+      - name: Render
+        run: quarto render
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+```
+
+## citations
+
+In `references.bib`:
+
+```bibtex
+@article{smith2023,
+  author = {Smith, John and Doe, Jane},
+  title = {A Study on Something},
+  journal = {Journal of Examples},
+  year = {2023},
+  volume = {1},
+  pages = {1-10}
+}
+```
+
+Im Text: `@smith2023` oder `[@smith2023, p. 5]`
+
+## wann es sinn macht
+
+- Seminararbeiten, Projekt-Dokumentation
+- Wenn Code und Text zusammengehören
+- Reproduzierbare Analysen
+
+## wann nicht
+
+- Abschlussarbeiten (zu wenig LaTeX-Kontrolle)
+- Papers für Journals (besser direkt deren Template)
+- Alles wo man sehr spezifische Formatierung braucht
 
 ## limitationen
 
-- Komplexes LaTeX geht manchmal nicht
-- Bibliographie-Support ist basic
-- Tables können nervig sein
+- Komplexe LaTeX-Sachen (Custom Packages, TikZ) gehen nicht immer
+- BibLaTeX-Features fehlen
+- Tabellen aus Pandas sehen manchmal komisch aus
+- Debugging bei Render-Fehlern ist nervig
 
 ## tech
 

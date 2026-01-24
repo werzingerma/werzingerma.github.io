@@ -6,12 +6,12 @@ permalink: /projekte/
 
 ## Uni
 
-Sachen aus dem Master-Studium.
+Aus dem Master-Studium (Applied Research in Computer Science, TH Nürnberg).
 
 <ul class="project-list">
   <li>
     <a href="/projekte/llm-pii-detection/">pii detection</a>
-    <span class="desc">– PII in LLM-Pipelines erkennen & maskieren</span>
+    <span class="desc">– Personenbezogene Daten in LLM-Pipelines erkennen</span>
   </li>
   <li>
     <a href="/projekte/osws-scientific-report/">quarto workflow</a>
@@ -19,7 +19,7 @@ Sachen aus dem Master-Studium.
   </li>
   <li>
     <a href="/projekte/neuroai-snn-gesture-recognition/">snn gesture recognition</a>
-    <span class="desc">– Handgesten mit Spiking Neural Networks</span>
+    <span class="desc">– Handgesten mit Spiking Neural Networks erkennen</span>
   </li>
 </ul>
 
@@ -30,7 +30,7 @@ Side Projects, meistens am Wochenende entstanden.
 <ul class="project-list">
   <li>
     <a href="/projekte/insightify/">insightify</a>
-    <span class="desc">– schnell in Datasets reinschauen ohne Jupyter</span>
+    <span class="desc">– CLI um schnell in CSVs reinzuschauen</span>
   </li>
   <li>
     <a href="/projekte/readmeo/">readmeo</a>
@@ -38,7 +38,7 @@ Side Projects, meistens am Wochenende entstanden.
   </li>
   <li>
     <a href="/projekte/pocket-arcade/">pocket arcade</a>
-    <span class="desc">– Snake, Minesweeper, Space Invaders fürs Handy</span>
+    <span class="desc">– Retro-Spiele fürs Handy</span>
   </li>
 </ul>
 

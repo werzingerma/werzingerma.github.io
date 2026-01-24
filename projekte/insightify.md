@@ -6,24 +6,43 @@ permalink: /projekte/insightify/
 
 # insightify
 
-CLI um schnell in CSVs/JSONs reinzuschauen.
+CLI um schnell in Datasets reinzuschauen. Ohne Jupyter, ohne IDE.
 
 ## warum
 
-Jupyter für jede kleine Datei aufmachen nervt. `df.describe()`, `df.isnull().sum()`, immer das gleiche. Also hab ich das in ein CLI gepackt.
+Bei der Arbeit ständig CSVs gecheckt – Jupyter dafür aufmachen war mir zu umständlich.
+
+## beispiel
+
+```bash
+$ insightify info verkaufsdaten.csv
+
+ Datei: verkaufsdaten.csv
+ Rows:  15,847
+ Cols:  12
+
+ Column       Type      Unique    Missing
+ ──────────────────────────────────────────
+ datum        date      365       0%
+ umsatz       float     8,421     0.1%
+ kunde_id     string    2,847     0%
+ region       category  4         2.1%
+
+$ insightify profile verkaufsdaten.csv --output report.html
+```
 
 ## was geht
 
-- `insightify info data.csv` → Spalten, Typen, Speicher
-- `insightify profile data.csv` → Missing values, Outliers, Stats
-- `insightify viz data.csv` → Histogramme, Korrelationen
-- Optional: Streamlit Dashboard wenn mans lieber klickt
+- `info` – Schneller Überblick
+- `profile` – Missing Values, Outliers, Verteilungen
+- `viz` – Histogramme, Korrelationen
+- CSV, Excel, JSON, Parquet
 
-## was noch nicht so gut geht
+## was noch nicht geht
 
-- Große Dateien (>500MB) werden langsam
-- PDF Export manchmal kaputt
-- Keine interaktiven Plots im CLI (nur im Dashboard)
+- [ ] Dateien >500MB nicht getestet
+- [ ] PDF-Export ist buggy
+- [ ] Keine interaktive Shell (wäre cool)
 
 ## tech
 
