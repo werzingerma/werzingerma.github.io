@@ -4,61 +4,194 @@ title: Projects
 permalink: /projekte/
 ---
 
-## Uni
+<main class="terminal">
+  <h1>Projekte</h1>
 
-Aus dem Master-Studium (Applied Research in Computer Science, TH Nürnberg).
+  <div class="terminal-window">
+    <div class="terminal-header">
+      <span class="terminal-prompt">$ ls ~/projects</span>
+    </div>
 
-<ul class="project-list">
-  <li>
-    <a href="/projekte/llm-pii-detection/">pii detection</a>
-    <span class="desc">– Personenbezogene Daten in LLM-Pipelines erkennen</span>
-  </li>
-  <li>
-    <a href="/projekte/osws-scientific-report/">quarto workflow</a>
-    <span class="desc">– Jupyter Notebooks automatisch als Paper publishen</span>
-  </li>
-  <li>
-    <a href="/projekte/neuroai-snn-gesture-recognition/">snn gesture recognition</a>
-    <span class="desc">– Handgesten mit Spiking Neural Networks erkennen</span>
-  </li>
-</ul>
+    <div class="terminal-content">
+      <!-- Uni -->
+      <div class="directory">
+        <span class="dir-header">drwxr-xr-x  uni/</span>
+        <ul>
+          <li>
+            <span class="tree">├── </span>
+            <a href="/projekte/neuroai-snn-gesture-recognition/">snn-gesture</a>
+            <span class="comment"># gesture recognition mit SNNs</span>
+            <span class="star">★</span>
+          </li>
+          <li>
+            <span class="tree">├── </span>
+            <a href="/projekte/llm-pii-detection/">pii-detection</a>
+            <span class="comment"># PII maskieren vor LLM-Calls</span>
+          </li>
+          <li>
+            <span class="tree">└── </span>
+            <a href="/projekte/osws-scientific-report/">quarto-workflow</a>
+            <span class="comment"># notebooks → papers</span>
+          </li>
+        </ul>
+      </div>
 
-## Privat
+      <!-- Side Projects -->
+      <div class="directory">
+        <span class="dir-header">drwxr-xr-x  side-projects/</span>
+        <ul>
+          <li>
+            <span class="tree">├── </span>
+            <a href="/projekte/insightify/">insightify</a>
+            <span class="comment"># CLI für CSV-Exploration</span>
+          </li>
+          <li>
+            <span class="tree">├── </span>
+            <a href="/projekte/readmeo/">readmeo</a>
+            <span class="comment"># GitHub README generator</span>
+          </li>
+          <li>
+            <span class="tree">└── </span>
+            <a href="/projekte/pocket-arcade/">pocket-arcade</a>
+            <span class="comment"># retro games PWA</span>
+          </li>
+        </ul>
+      </div>
 
-Side Projects, meistens am Wochenende entstanden.
-
-<ul class="project-list">
-  <li>
-    <a href="/projekte/insightify/">insightify</a>
-    <span class="desc">– CLI um schnell in CSVs reinzuschauen</span>
-  </li>
-  <li>
-    <a href="/projekte/readmeo/">readmeo</a>
-    <span class="desc">– GitHub Profile READMEs zusammenklicken</span>
-  </li>
-  <li>
-    <a href="/projekte/pocket-arcade/">pocket arcade</a>
-    <span class="desc">– Retro-Spiele fürs Handy</span>
-  </li>
-</ul>
+    </div>
+  </div>
+</main>
 
 <style>
-.project-list {
+/* Terminal Container */
+.terminal {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.terminal h1 {
+  font-family: inherit;
+  margin-bottom: 1.5rem;
+}
+
+/* Terminal Window */
+.terminal-window {
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.terminal-header {
+  background: #161b22;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #30363d;
+}
+
+.terminal-prompt {
+  font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace;
+  font-size: 0.9rem;
+  color: #7ee787;
+}
+
+.terminal-prompt::after {
+  content: '▋';
+  animation: blink 1s step-end infinite;
+  margin-left: 0.5rem;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.terminal-content {
+  padding: 1rem 1.25rem;
+  font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace;
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+
+/* Directories */
+.directory {
+  margin-bottom: 1.25rem;
+}
+
+.directory:last-child {
+  margin-bottom: 0;
+}
+
+.dir-header {
+  color: #8b949e;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.directory ul {
   list-style: none;
+  margin: 0;
   padding: 0;
-  margin: 1rem 0 2rem 0;
+  padding-left: 1rem;
 }
 
-.project-list li {
-  margin: 0.6rem 0;
-  line-height: 1.5;
+.directory li {
+  display: flex;
+  align-items: baseline;
+  gap: 0;
+  white-space: nowrap;
 }
 
-.project-list a {
-  font-weight: 600;
+.directory li:hover {
+  background: rgba(88, 166, 255, 0.1);
+  margin-left: -0.5rem;
+  padding-left: 0.5rem;
+  margin-right: -0.5rem;
+  padding-right: 0.5rem;
 }
 
-.project-list .desc {
-  color: #666;
+/* Tree Characters */
+.tree {
+  color: #484f58;
+  user-select: none;
+}
+
+/* Links */
+.terminal-content a {
+  color: #58a6ff;
+  text-decoration: none;
+  min-width: 140px;
+  display: inline-block;
+}
+
+.terminal-content a:hover {
+  text-decoration: underline;
+}
+
+/* Comments */
+.comment {
+  color: #6e7681;
+  margin-left: 0.5rem;
+}
+
+/* Special Markers */
+.star {
+  color: #f0c14b;
+  margin-left: 0.5rem;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .terminal-content {
+    font-size: 0.75rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .terminal-content a {
+    min-width: 100px;
+  }
+
+  .comment {
+    display: none;
+  }
 }
 </style>
