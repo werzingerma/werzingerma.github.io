@@ -1,43 +1,36 @@
 ---
 layout: page
-title: Readmeo
+title: readmeo
 permalink: /projekte/readmeo/
 ---
 
-<div class="project-detail">
-  <p class="pill">Desktop · Svelte · Tauri</p>
-  <h2>Readmeo</h2>
+# readmeo
 
-  <p><strong>A desktop app for building GitHub profile READMEs with drag-and-drop.</strong></p>
+Desktop-App für GitHub Profile READMEs.
 
-  <p>
-    <a href="https://github.com/werzingerma/readmeo" class="primary-btn" target="_blank">View on GitHub</a>
-  </p>
+Drag & Drop, Preview, Export. Kein Account, läuft lokal.
 
-  <h3>Overview</h3>
-  <p>
-    Readmeo is a small desktop app that helps you create a README for your GitHub profile. You drag around pre-made blocks (like "About Me", "Tech Stack", "GitHub Stats"), customize them, and export the markdown. Everything runs locally on your machine.
-  </p>
+## features
 
-  <h3>Features</h3>
-  <ul>
-    <li>Drag-and-drop editor for arranging content blocks</li>
-    <li>Live preview of the markdown output</li>
-    <li>Pre-built blocks for common sections (Header, About, Tech Stack, Stats, etc.)</li>
-    <li>Custom markdown blocks if you need something specific</li>
-    <li>Copy to clipboard or save as file</li>
-    <li>Dark mode</li>
-  </ul>
+- Block-Editor mit vorgefertigten Sektionen (About, Tech Stack, Stats)
+- Live Markdown Preview
+- Eigene Markdown-Blöcke wenn nötig
+- Dark Mode
 
-  <h3>Built with</h3>
-  <table>
-    <tr><td><strong>Frontend</strong></td><td>Svelte 5, TypeScript</td></tr>
-    <tr><td><strong>Desktop</strong></td><td>Tauri 2</td></tr>
-    <tr><td><strong>Build</strong></td><td>Vite</td></tr>
-  </table>
+## known issues
 
-  <h3>Why Tauri?</h3>
-  <p>
-    I wanted to try out Tauri as an alternative to Electron. The resulting app is much smaller and feels snappier. Plus I got to learn Svelte along the way.
-  </p>
-</div>
+- Kein Undo/Redo (muss ich noch machen)
+- Dark Mode Setting speichert nicht zwischen Sessions
+- Manchmal buggy wenn man Blöcke schnell hin und her zieht
+
+## warum Tauri
+
+Wollte Tauri mal ausprobieren statt Electron. App ist viel kleiner (~15MB vs ~150MB) und fühlt sich schneller an. Hab dabei auch Svelte gelernt.
+
+## tech
+
+Svelte 5, TypeScript, Tauri 2, Vite
+
+---
+
+[→ GitHub](https://github.com/werzingerma/readmeo)
