@@ -126,24 +126,24 @@ permalink: /notizen/
   margin-bottom: 1.5rem;
 }
 
-/* Terminal Window */
+/* Terminal Window - Nord Theme */
 .terminal-window {
-  background: #0d1117;
-  border: 1px solid #30363d;
+  background: #2e3440;
+  border: 1px solid #4c566a;
   border-radius: 8px;
   overflow: hidden;
 }
 
 .terminal-header {
-  background: #161b22;
+  background: #3b4252;
   padding: 0.75rem 1rem;
-  border-bottom: 1px solid #30363d;
+  border-bottom: 1px solid #4c566a;
 }
 
 .terminal-prompt {
   font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace;
   font-size: 0.9rem;
-  color: #7ee787;
+  color: #a3be8c;
 }
 
 .terminal-prompt::after {
@@ -173,7 +173,7 @@ permalink: /notizen/
 }
 
 .dir-header {
-  color: #8b949e;
+  color: #d8dee9;
   display: block;
   margin-bottom: 0.25rem;
 }
@@ -193,7 +193,7 @@ permalink: /notizen/
 }
 
 .directory li:hover {
-  background: rgba(88, 166, 255, 0.1);
+  background: rgba(136, 192, 208, 0.1);
   margin-left: -0.5rem;
   padding-left: 0.5rem;
   margin-right: -0.5rem;
@@ -202,36 +202,37 @@ permalink: /notizen/
 
 /* Tree Characters */
 .tree {
-  color: #484f58;
+  color: #4c566a;
   user-select: none;
 }
 
 /* Links */
 .terminal-content a {
-  color: #58a6ff;
+  color: #88c0d0;
   text-decoration: none;
   min-width: 120px;
   display: inline-block;
 }
 
 .terminal-content a:hover {
+  color: #8fbcbb;
   text-decoration: underline;
 }
 
 /* Comments */
 .comment {
-  color: #6e7681;
+  color: #616e88;
   margin-left: 0.5rem;
 }
 
 /* Special Markers */
 .star {
-  color: #f0c14b;
+  color: #ebcb8b;
   margin-left: 0.5rem;
 }
 
 .wip {
-  color: #f85149;
+  color: #bf616a;
 }
 
 /* Mobile */
