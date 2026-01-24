@@ -505,31 +505,63 @@ h2.section-heading {
   justify-content: flex-start;
 }
 
-/* Code blocks */
+/* Code blocks - Override minima/rouge */
 pre, code {
-  background: var(--nord1);
-  border: 1px solid var(--nord3);
+  background: #2e3440 !important;
+  border: 1px solid #4c566a !important;
   border-radius: 8px;
-  color: var(--nord6);
+  color: #eceff4 !important;
   font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace;
 }
 
 pre {
   padding: 1rem;
   overflow-x: auto;
-  background: var(--nord0);
 }
 
 code {
   padding: 0.2rem 0.4rem;
   font-size: 0.9em;
-  background: var(--nord1);
+  background: #3b4252 !important;
 }
 
 pre code {
-  border: none;
+  border: none !important;
   padding: 0;
-  background: transparent;
+  background: transparent !important;
+}
+
+/* Rouge syntax highlighting - Nord theme */
+.highlighter-rouge,
+.highlight {
+  background: #2e3440 !important;
+  border-radius: 8px;
+}
+
+.highlight pre {
+  background: #2e3440 !important;
+  margin: 0;
+}
+
+.highlight pre code {
+  background: transparent !important;
+  color: #eceff4 !important;
+}
+
+/* Nord syntax colors */
+.highlight {
+  .c, .c1, .cm, .cs { color: #616e88; } /* comments */
+  .k, .kd, .kn, .kp, .kr, .kt { color: #81a1c1; } /* keywords */
+  .s, .s1, .s2, .sb, .sc, .sd, .se, .sh, .si, .sx, .sr { color: #a3be8c; } /* strings */
+  .n, .na, .nb, .nc, .nd, .ne, .nf, .ni, .nl, .nn, .no, .nt, .nv { color: #88c0d0; } /* names */
+  .m, .mf, .mh, .mi, .mo, .il { color: #b48ead; } /* numbers */
+  .o, .ow { color: #81a1c1; } /* operators */
+  .p { color: #eceff4; } /* punctuation */
+  .err { color: #bf616a; } /* errors */
+  .gi { color: #a3be8c; } /* git inserted */
+  .gd { color: #bf616a; } /* git deleted */
+  .bp { color: #5e81ac; } /* builtins */
+  .vc, .vg, .vi { color: #d8dee9; } /* variables */
 }
 
 /* Tables */
@@ -542,21 +574,21 @@ table {
 }
 
 th, td {
-  border: 1px solid var(--nord3);
+  border: 1px solid #4c566a !important;
   padding: 0.6rem 0.8rem;
   text-align: left;
-  color: var(--nord6);
+  color: #eceff4 !important;
 }
 
 th {
-  background: var(--nord2);
-  color: var(--nord6);
+  background: #434c5e !important;
+  color: #eceff4 !important;
   font-weight: 600;
 }
 
 td {
-  background: var(--nord1);
-  color: var(--nord5);
+  background: #3b4252 !important;
+  color: #d8dee9 !important;
 }
 
 /* Blockquotes */
